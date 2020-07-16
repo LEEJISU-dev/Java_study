@@ -1,4 +1,4 @@
-*³ªÀÌ, ½Ä»ç·®, ÇÑ³¢ ½Ä´ë°ª ÀÔ·Â -> ±×µ¿¾È ½Ä´ë°ªÀº?
+# ë‚˜ì´, ì‹ì‚¬ëŸ‰, í•œë¼ ì‹ëŒ€ê°’ ìž…ë ¥ -> ê·¸ë™ì•ˆ ì‹ëŒ€ê°’ì€?
 
 import java.util.Scanner;
 
@@ -6,44 +6,44 @@ import java.util.Scanner;
 		int a;
 		
 		Scanner sc = new Scanner(System.in);
-		System.out.println("³ªÀÌ¸¦ ÀÔ·ÂÇÏ¼¼¿ä:\n");
+		System.out.println("ë‚˜ì´ë¥¼ ìž…ë ¥í•˜ì„¸ìš”:\n");
 		age = sc.nextInt();
 		
-		System.out.println("½Ä»ç·®À» ÀÔ·ÂÇÏ¼¼¿ä:\n");
+		System.out.println("ì‹ì‚¬ëŸ‰ì„ ìž…ë ¥í•˜ì„¸ìš”:\n");
 		bun =sc.nextInt();
 		
-		System.out.println("ÇÑ³¢ ½Ä´ë°ªÀ» ÀÔŽ¶ÇÏ¼¼¿ä:\n");
+		System.out.println("í•œë¼ ì‹ëŒ€ê°’ì„ ìž…ë˜ç©¶ì…€:\n");
 		price =sc.nextInt();
 		
 		a=age*365*bun*price;
-		System.out.printf("Áö±Ý±îÁö ½Ä´ëºñ´Â %d¿øÀÔ´Ï´Ù.",a);
+		System.out.printf("ì§€ê¸ˆê¹Œì§€ ì‹ëŒ€ë¹„ëŠ” %dì›ìž…ë‹ˆë‹¤.",a);
 
 
-printf -> %d %fµîÀ» ½á¾ßÇÔ System.out.printf("a´Â ¼ýÀÚ %d\n",a);
-print-> ¹Ù·Î ¿·¿¡ ÀÔ·Â System.out.print("a´Â ¼ýÀÚ"+ a + "ÀÔ´Ï´Ù\n" );
-println->ÀÚµ¿ÁÙ¹Ù²Þ  System.out.println("a´Â ¼ýÀÚ"+ a + "ÀÔ´Ï´Ù" );
+printf -> %d %fë“±ì„ ì¨ì•¼í•¨ System.out.printf("aëŠ” ìˆ«ìž %d\n",a);
+print-> ë°”ë¡œ ì˜†ì— ìž…ë ¥ System.out.print("aëŠ” ìˆ«ìž"+ a + "ìž…ë‹ˆë‹¤\n" );
+println->ìžë™ì¤„ë°”ê¿ˆ  System.out.println("aëŠ” ìˆ«ìž"+ a + "ìž…ë‹ˆë‹¤" );
 
 
 
-*Á¤¼öÇÏ³ª ÀÔ·Â -> ¸î½Ã ¸îºÐ ¸îÃÊÀÎÁö 
+# ì •ìˆ˜í•˜ë‚˜ ìž…ë ¥ -> ëª‡ì‹œ ëª‡ë¶„ ëª‡ì´ˆì¸ì§€ 
         int hour, min, sec, time;
 	Scanner sc= new Scanner(System.in);
-	System.out.println("ÃÊ¸¦ ÀÔ·ÂÇÏ½Ã¿ä(Á¤¼ö):");
+	System.out.println("ì´ˆë¥¼ ìž…ë ¥í•˜ì‹œìš”(ì •ìˆ˜):");
 	time=sc.nextInt();
 	
 	sec = time % 60;
 	min = (time / 60) % 60;
 	hour = (time/60)/60;
 	
-	System.out.println(hour+"½Ã°£ "+min+"ºÐ "+sec+"ÃÊ ÀÔ´Ï´Ù");
+	System.out.println(hour+"ì‹œê°„ "+min+"ë¶„ "+sec+"ì´ˆ ìž…ë‹ˆë‹¤");
 
-*±Ý¾×ÀÔ·Â-> ¿À¸¸¿ø, ¸¸¿ø, Ãµ¿ø, ¿À¹é¿ø, ¹é¿ø ¸î°³ÀÎ°¡?
-654200
+# ê¸ˆì•¡ìž…ë ¥-> ì˜¤ë§Œì›, ë§Œì›, ì²œì›, ì˜¤ë°±ì›, ë°±ì› ëª‡ê°œì¸ê°€?
+  654200
         int won;
 	int om,m, c,ob,b;
 	
 	Scanner sc = new Scanner(System.in);
-	System.out.println("±Ý¾×À» ÀÔ·ÂÇÏ½Ã¿À:");
+	System.out.println("ê¸ˆì•¡ì„ ìž…ë ¥í•˜ì‹œì˜¤:");
 	won =sc.nextInt();
 	
 	om=won/50000;
@@ -52,16 +52,16 @@ println->ÀÚµ¿ÁÙ¹Ù²Þ  System.out.println("a´Â ¼ýÀÚ"+ a + "ÀÔ´Ï´Ù" );
 	ob =(won%50000%10000%1000)/500;
 	b =(won%50000%10000%1000%500)/100;
 	
-	System.out.print(won+"¿øÀº ");
-	System.out.print("¿À¸¸¿ø"+om+"Àå ");
-	System.out.print("¸¸¿ø"+m+"Àå ");
-	System.out.print("Ãµ¿ø"+c+"Àå ");
-	System.out.print("¿À¹é¿ø"+ob+"°³ ");
-	System.out.print("¹é¿ø"+b+"°³ÀÔ´Ï´Ù");
+	System.out.print(won+"ì›ì€ ");
+	System.out.print("ì˜¤ë§Œì›"+om+"ìž¥ ");
+	System.out.print("ë§Œì›"+m+"ìž¥ ");
+	System.out.print("ì²œì›"+c+"ìž¥ ");
+	System.out.print("ì˜¤ë°±ì›"+ob+"ê°œ ");
+	System.out.print("ë°±ì›"+b+"ê°œìž…ë‹ˆë‹¤");
 
 
-*»ïÇ× ¿¬»êÀÚ(ÀÌ·²¶§ È°¿ë)
+# ì‚¼í•­ ì—°ì‚°ìž(ì´ëŸ´ë•Œ í™œìš©)
 
         int a=5, b=3;
-	System.out.println("µÎ ¼öÀÇ Â÷´Â " +((a>b)?(a-b):(b-a)) );
+	System.out.println("ë‘ ìˆ˜ì˜ ì°¨ëŠ” " +((a>b)?(a-b):(b-a)) );
 

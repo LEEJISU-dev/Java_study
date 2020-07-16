@@ -1,0 +1,67 @@
+*나이, 식사량, 한끼 식대값 입력 -> 그동안 식대값은?
+
+import java.util.Scanner;
+
+	        int age, bun, price;
+		int a;
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("나이를 입력하세요:\n");
+		age = sc.nextInt();
+		
+		System.out.println("식사량을 입력하세요:\n");
+		bun =sc.nextInt();
+		
+		System.out.println("한끼 식대값을 입렧하세요:\n");
+		price =sc.nextInt();
+		
+		a=age*365*bun*price;
+		System.out.printf("지금까지 식대비는 %d원입니다.",a);
+
+
+printf -> %d %f등을 써야함 System.out.printf("a는 숫자 %d\n",a);
+print-> 바로 옆에 입력 System.out.print("a는 숫자"+ a + "입니다\n" );
+println->자동줄바꿈  System.out.println("a는 숫자"+ a + "입니다" );
+
+
+
+*정수하나 입력 -> 몇시 몇분 몇초인지 
+        int hour, min, sec, time;
+	Scanner sc= new Scanner(System.in);
+	System.out.println("초를 입력하시요(정수):");
+	time=sc.nextInt();
+	
+	sec = time % 60;
+	min = (time / 60) % 60;
+	hour = (time/60)/60;
+	
+	System.out.println(hour+"시간 "+min+"분 "+sec+"초 입니다");
+
+*금액입력-> 오만원, 만원, 천원, 오백원, 백원 몇개인가?
+654200
+        int won;
+	int om,m, c,ob,b;
+	
+	Scanner sc = new Scanner(System.in);
+	System.out.println("금액을 입력하시오:");
+	won =sc.nextInt();
+	
+	om=won/50000;
+	m =(won%50000)/10000;
+	c = (won%50000%10000)/1000;
+	ob =(won%50000%10000%1000)/500;
+	b =(won%50000%10000%1000%500)/100;
+	
+	System.out.print(won+"원은 ");
+	System.out.print("오만원"+om+"장 ");
+	System.out.print("만원"+m+"장 ");
+	System.out.print("천원"+c+"장 ");
+	System.out.print("오백원"+ob+"개 ");
+	System.out.print("백원"+b+"개입니다");
+
+
+*삼항 연산자(이럴때 활용)
+
+        int a=5, b=3;
+	System.out.println("두 수의 차는 " +((a>b)?(a-b):(b-a)) );
+

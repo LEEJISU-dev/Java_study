@@ -1,0 +1,141 @@
+#예외처리 예제1
+
+import java.io.*;//입출력
+
+public class Ex1 {
+
+	public static void main(String[] args) {
+		try {
+			FileReader file = new FileReader("a.txt");
+			int i;
+			while ((i = file.read()) != -1) {
+				System.out.print((char) i);
+			}
+			file.close();
+		} catch (Exception e) {
+			System.out.println("예외처리 루틴: " + e + "파일이 존재하지 않음");
+		}
+
+	}
+
+}
+
+
+
+#수학오류 예외처리
+
+		Scanner sc = new Scanner(System.in);
+		int a=0, b=0;
+		
+		System.out.print("a : ");
+		a = sc.nextInt();
+		System.out.print("b :");
+		b = sc.nextInt();
+		try{
+			System.out.println("a/b = "+(a/b));
+			//오류 모를경우 가장 최상위개념인 Exception e로 씀
+		}catch(ArithmeticException e){ //수학오류
+			System.out.println("0으로 나눌수 없음");
+			main(null);
+		}
+		
+
+
+#형식 변환 오류 예외처리
+
+		String arr[]={"23", "12","998", "3.141592"};
+		try{ //for문은 한 구문이기때문에 같이 묶어야함
+		for(int i=0; i<arr.length;i++){
+			int j= Integer.parseInt(arr[i]);
+			System.out.println("숫자로 변환된 값: "+j);
+		}
+		}catch(NumberFormatException e){//형식 예외
+			System.out.println("정수로 변환불가");
+		}
+
+
+#배열 범위오류 예외처리
+		int arr[]= new int[5];
+		try{
+		System.out.println(arr[5]);
+		}catch(ArrayIndexOutOfBoundsException e){//배열범위오류
+			System.out.println("범위를 벗어남");
+		}
+
+
+#예외처리 -> 1 2 3 true ArithmeticException 6
+
+		System.out.println(1);
+		System.out.println(2);
+		try {
+			System.out.println(3);
+			System.out.println(0 / 0);
+			System.out.println(4);
+
+//try-catch 마지막에 Exception의 catch를 사용하면 어떤 종류의 예외도 다 처리가능
+
+		} catch (ArithmeticException ae) {
+			if (ae instanceof ArithmeticException)
+				System.out.println("true");
+			System.out.println("ArithmeticException");
+		} catch (Exception e) {
+			System.out.println("Exception");
+		}
+		System.out.println(6);
+
+
+#강제 예외발생시키기 / 예외전가시키기
+
+class AA {
+	void aa() throws Exception {
+		BB b = new BB();
+		b.bb();
+	}
+}
+
+class BB {
+	void bb() throws Exception { // 예외 전가 시킴
+		Exception e = new Exception("강제 예외발생");
+		throw e;// 예외 강제 발생
+		// =throw new Exception("강제 예외 발생");
+
+	}
+}
+
+public class Ex3 {
+
+	public static void main(String[] args) throws Exception {
+		AA a = new AA();
+		a.aa();
+
+	}
+}
+
+
+*try-catch-failly문
+failly는 예외와 상관없이 실행된다
+
+public class Ex1 {
+
+	public static void main(String[] args) {
+		Ex1.method1();
+		System.out.println("method1()의 수행 마치고 main메서드로 돌아왔습니다.");
+	}
+	
+	static void method1(){
+		try{
+			System.out.println("method1()이 호출되었습니다.");
+			return;
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally{
+			System.out.println("method1의 fainally 블럭 실행");
+		}
+	}
+
+}
+
+
+method1()이 호출되었습니다.
+method1의 fainally 블럭 실행
+method1()의 수행 마치고 main메서드로 돌아왔습니다.

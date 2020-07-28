@@ -1,0 +1,130 @@
+
+#사람의 객체, 클래스
+
+public class People {
+	//속성
+	String name;
+	String sex;
+	int age;
+	
+	void speak(){
+		System.out.println("말한다");
+	}
+	
+	void walk(){
+		System.out.println("걷는다");
+	}
+}
+
+public class Lbi {
+
+	public static void main(String[] args) {
+		People p1 =new People();
+		
+		p1.name ="이지수";
+		p1.age =24;
+		
+		p1.speak();
+		p1.walk();
+		
+		People p2 = new People();
+		
+
+	}
+
+}
+
+
+#두수의 합과 차
+
+class PlusMinus {
+	int plus, minus;
+	public String plus(int x, int y){
+		plus =  x+y;
+		return "두수의 합은"+plus;
+	}
+	public String minus(int x, int y){
+		minus= x-y;
+		return "두수의 차는"+minus;
+	}
+}
+
+public class Ex1 {
+
+	public static void main(String[] args) {
+		PlusMinus ob1 =new PlusMinus();
+		String sum, minus;
+		sum = ob1.plus(50, 30);
+		minus =ob1.minus(50, 30);
+		System.out.println(sum);
+		System.out.println(minus);
+
+	}
+
+}
+
+
+#티비 클래스
+class Tv{
+	String color;
+	boolean power;
+	int channel;
+	
+	void power(){
+		power = !power;}
+	void channelUp(){
+		++channel;
+	}
+	void channelDown(){
+		--channel;
+	}
+}
+public class TvTest {
+
+	public static void main(String[] args) {
+		Tv t1 = new Tv();
+		Tv t2 = new Tv();
+		System.out.println("t1 channel :"+t1.channel);
+		System.out.println("t2 channel :"+t2.channel);
+		t2=t1;
+		t1.channel =7;
+		System.out.println("t1 channel값은 7로 변경");
+		
+		System.out.println("t1 channel :"+t1.channel);
+		System.out.println("t2 channel :"+t2.channel);
+		
+
+	}
+
+}
+
+#박스 클래스
+class Box1{
+	int width;
+	int height;
+	int depth;	
+	
+}
+public class BoxTest1 {
+
+	public static void main(String[] args) {
+		Box1 b1 = new Box1();
+		Box1 b2 = new Box1();
+		
+		b1.width =78;
+		b1.height=145;
+		b1.depth =87;
+		
+		b2.width=48;
+		b2.height =45;
+		b2.depth =137;
+		int vo1, vo2;
+		
+		vo1=b1.depth*b1.height*b1.width;
+		System.out.println("1box vol :"+vo1);
+		vo2=b2.depth*b2.height*b2.width;
+		System.out.println("2box vol :"+vo2);
+
+	}
+
+}

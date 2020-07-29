@@ -1,0 +1,203 @@
+#생성자 오버로딩
+class Cons1{//생성자 오버로딩(이름 같은 인자가 다른 여러 생성자 구현)
+	public int num;
+	Cons1(){//Cons1(){}매개변수 없는 묵시적 생성자(클래스 이름과 동일)
+		System.out.println("묵시적 생성자");
+	}//명시적 생성자가 있다면 묵시적 꼭 써줘야 함
+	Cons1(String s){//매개변수 있는 명시적 생성자
+		System.out.println(s+"명시적 생성자");
+	}
+	Cons1(int i){
+		System.out.println(i+"명시적 생성자");
+	}
+}
+public class ConsTest1 {
+
+	public static void main(String[] args) {
+		Cons1 cons = new Cons1();
+		Cons1 cons1 = new Cons1("첫번째");
+		Cons1 cons2 = new Cons1(5);
+	}
+
+}
+
+
+#
+class Box{
+	int width;
+	int height;
+	int depth;
+	Box(int w, int h, int d){//생성자 객체의 초기값 정의 (클래스 이름과 동일
+		width =w;
+		height=h;
+		depth =d;
+	}
+}
+public class BoxTest {
+
+	public static void main(String[] args) {
+		Box my = new Box(10, 20, 30);
+		int vol = my.width* my.height*my.depth;
+		System.out.println("박스의 부피: "+vol);
+
+	}
+
+}
+
+
+#생성자 오버로딩
+class Box5{
+	int width;
+	int height;
+	int depth;
+	Box5(){
+		width =1;
+		height =1;
+		depth =1;
+	}
+	Box5(int w){
+		width =w;
+		height =1;
+		depth =1;
+	}
+	Box5(int w, int h){
+		width =w;
+		height =h;
+		depth =1;
+	}
+	Box5(int w, int h, int d){
+		width =w;
+		height =h;
+		depth =d;
+	}
+	
+}
+public class Box5Test {
+
+	public static void main(String[] args) {
+		Box5 m1 = new Box5();
+		int vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: "+vol);
+		m1 = new Box5(10);
+		vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: "+vol);
+		m1 = new Box5(10, 20);
+		vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: "+vol);
+		m1 = new Box5(10, 20, 30);
+		vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: "+vol);
+
+	}
+
+}
+
+
+#this
+class Box7 {
+	int width;
+	int height;
+	int depth;
+
+	Box7() {
+		this(1, 1, 1);//this 이용, 3개이 매개변수 가진 생성자 호출/항상 맨 첫줄에!
+		System.out.println("매개 변수 없는 생성자 수행");
+	}
+
+	Box7(int width) {
+		this(width, 1, 1);
+		System.out.println("매개변수(1) 생성자 수행");
+	}
+
+	Box7(int width, int height) {
+		this(width, height, 1);
+		System.out.println("매개변수(2) 생성자 수행");
+	}
+
+	Box7(int width, int height, int depth) {
+		System.out.println("매개변수(3) 생상자 수행");
+		this.width = width;
+		this.height = height;
+		this.depth = depth;
+	}
+}
+
+public class Box7Test {
+
+	public static void main(String[] args) {
+		Box7 m1 = new Box7();
+		int vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: " + vol);
+		m1 = new Box7(10);
+		vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: " + vol);
+		m1 = new Box7(10, 20);
+		vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: " + vol);
+		m1 = new Box7(10, 20, 30);
+		vol = m1.depth * m1.height * m1.width;
+		System.out.println("박스의 부피: " + vol);
+
+	}
+
+}
+
+
+
+#환율계산 static
+class Coverter{
+	private static double rate;//한국 원화에 대한 환율
+	
+	public static double toDollar(double won){
+		return won/rate;
+	}
+	
+	public static double toKWR(double dollar){
+		return dollar*rate;
+	}
+	
+	public static void setRate(double r){
+		rate =r;//환율설정. KWR/$1
+	}
+}
+public class StaticMember {
+
+	public static void main(String[] args) {
+		Coverter.setRate(1120);
+		
+		System.out.println("백만원은 "+Coverter.toDollar(1000000)+"달러입니다");
+		System.out.println("백달러는 "+Coverter.toKWR(100)+"원 입니다.");
+
+	}
+
+}
+
+
+
+#오버로딩 static private
+
+public class Book {
+	private String title;
+	private String author;
+	int ISBN;
+	public Book(String title, String author, int ISBN){
+		this.title=title;
+		this.author=author;
+		this.ISBN=ISBN;
+		System.out.println(this.title+":"+this.author+":"+ this.ISBN);
+	}
+	public Book(String title, int ISBN){
+		this(title, "Anonymous", ISBN);
+	}
+	public Book(){
+		this(null, null, 0);
+		System.out.println("생성자가 호출됨");
+	}
+	public static void main(String[] args) {
+		Book java = new Book("JAVA", "이병일", 27);
+		Book Holybible= new Book("Holly", 1);
+		Book empty = new Book();
+
+	}
+
+}

@@ -1,0 +1,244 @@
+#문자열 함수
+
+public class StringTest {
+
+	public static void main(String[] args) {
+		String word = "I LOVE YOU";
+		String s1, s2, s3, s4, s5;
+		
+		System.out.println(word.length());//공백포함
+		s1 = word.toLowerCase();//소문자
+		System.out.println(s1);
+		s2 = word.toUpperCase();//대문자
+		System.out.println(s2);
+		s3 = word.concat(" so much <3");//문자열끼리 결합
+		System.out.println(s3);
+		s4 = word.replace("LOVE", "Hate");//바꾸기
+		System.out.println(s4);
+		s5 = word.substring(2, 6);//인덱스0부터 시작, 6앞까지 문자열 추출
+		System.out.println(s5);
+	}
+
+}
+
+
+
+#메소드 오버로딩 -> 가변길이 변수
+class Test{
+	/*void sub(){
+		System.out.println("매개변수의 값 :0");
+	}
+	
+	void sub(int x){
+		System.out.println("매개변수의 값 :"+x);
+	}
+	
+	void sub(int x, int y, int z, int i){
+		System.out.println("매개변수의 값 :"+x +y+z+i);
+	}*/
+	
+	void sub(int... x){//같은 형이면 오버로딩대신 사용(가변 길이 변수jdk1.5이상 가능)
+		for(int i : x){
+			System.out.print(i+ " ");
+		}
+		System.out.println();
+		
+	}
+}
+public class VarTest {
+
+	public static void main(String[] args) {
+		Test t1 = new Test();
+		t1.sub(1);
+		t1.sub(2, 3, 4, 5);
+		t1.sub();
+
+	}
+
+}
+
+
+
+# 
+class Lamp{
+	private boolean isOn;
+	
+	public void turnOn(){
+		isOn = true;
+	}
+	public void turnOff(){
+		isOn = false;
+	}
+	
+	public String toString(){
+		return "현재상태: "+(isOn==true ?"켜짐":"꺼짐");
+	}
+}
+public class LampTest {
+
+	public static void main(String[] args) {
+		Lamp l = new Lamp();
+		l.turnOn();
+		System.out.println(l);
+		l.turnOff();
+		System.out.println(l);
+	}
+
+}
+
+
+
+#오버라이딩(toString)
+class BankAccount{
+	int accountNumber;
+	String name;
+	int balance;//잔액
+	
+	
+	public void deposit(int amount){//입금
+		balance += amount;
+	}
+	public void withdraw(int amount){//출금
+		balance -= amount;
+	}
+	
+	public String toString(){
+		return "현재 잔액은 " + balance+"만원 입니다";
+	}
+}
+public class BankAccountTest {
+
+	public static void main(String[] args) {
+		BankAccount ba = new BankAccount();
+		ba.deposit(100);
+		System.out.println(ba);
+		ba.withdraw(10);
+		System.out.println(ba);
+
+	}
+
+}
+
+
+
+#시간 출력
+class Time{
+	private int hour;
+	private int min;
+	private int sec;
+	
+	Time(){
+		this(0, 0, 0);
+	}
+	Time(int hour, int min, int sec){
+		setTime(hour, min, sec);
+	}
+	
+	private void setTime(int hour, int min,int sec){
+		this.hour = ((hour>=0 && hour<24)?hour:0);//시간 검증
+		this.min =((min>=0 && min<60)?min:0);
+		this.sec =((sec>=0 && sec<60)?sec:0);
+	}
+	
+	public String toString(){//재정의 (오버라이딩)
+		return String.format("%02d : %02d : %02d", hour, min, sec);
+		//한자리만 들어오면 앞자리 0
+	}
+}
+public class TimeTest {
+
+	public static void main(String[] args) {
+		Time t = new Time();
+		System.out.println(t);
+		
+		Time t2 = new Time(13, 27, 6);
+		System.out.println(t2);
+	}
+
+}
+
+
+
+lbi5320@naver.com
+#숙제
+다수의 클래스를 정의해서 사칙연산(+, -, *, /)을 수행하는 Add, Sub, Mul, Div클래스 만들고
+다음과 같은 연산이 가능하도록 프로그래밍 하시오
+
+두 정수와 연산자를 입력하시오>> 3 4 +
+7
+
+...
+두 정수와 연산자를 입력하시오>> 3 3 .
+프로그램 종료
+
+
+import java.util.*;
+
+class Add{
+	int a, b;
+	 public void add(int a, int b){
+		 System.out.println("두수의 합은 "+(a+b));
+	 }
+}
+
+class Sub{
+	int a, b;
+	public void sub(int a, int b){
+		System.out.println("두수의 차는 "+(a-b));
+	}
+}
+
+class Mul{
+	int a, b;
+	public void mul(int a, int b){
+		System.out.println("두 수의 곱은 "+(a*b));
+	}
+}
+class Div{
+	int a, b;
+	public String div(int a, int b){
+		System.out.println("두수의 나눗셈은 "+(a/b));
+	}
+	
+}
+public class Hw {
+
+	public static void main(String[] args) {
+		Add i = new Add();
+		Sub s = new Sub();
+		Mul m = new Mul();
+		Div d = new Div();
+		String c;
+		int a, b;
+		Scanner sc = new Scanner(System.in);
+		
+		do{
+			System.out.print("두 정수와 연산자를 입력하시오: ");
+			a=sc.nextInt();
+			b=sc.nextInt();
+			c=sc.next();
+
+			if(c.equals("+")){
+				
+				i.add(a, b);
+			}
+			else if(c.equals("-")){
+				System.out.println(c);
+			
+				s.sub(a, b);
+			}
+			else if (c.equals("*"))
+				m.mul(a, b);
+			else if (c.equals("/"))
+				d.div(a, b);	
+			else
+				System.out.println("다시 입력하세요");
+		}while(c.equals("."));
+			System.out.println("프로그램 종료");
+		
+		
+
+	}
+
+}
+

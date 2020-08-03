@@ -1,0 +1,205 @@
+#toString()메소드
+
+public String toString(){
+	return getClass().getName()+"@"+Integer.toHexString(hashCode());
+}
+
+
+class AAA{
+	public int a;
+}
+public class ObjectMethodTest {
+
+	public static void main(String[] args) {
+		AAA aa = new AAA();
+		System.out.println(aa);
+		System.out.println(aa.toString());
+		Integer ii =new Integer(99);
+		System.out.println(ii);
+		System.out.println(ii.toString());
+
+	}
+
+}
+
+
+class AAA{
+	public int a;
+	public String toString(){//오버라이딩
+		return "AAA 클래스 객체, 속성 a의 값은:"+a;
+	}
+}
+public class ObjectMethodTest {
+
+	public static void main(String[] args) {
+		AAA aa = new AAA();
+		System.out.println(aa);
+		System.out.println(aa.toString());
+	}
+
+}
+
+
+
+
+
+
+#동등연산자(==)/ equals()
+
+class Box10{
+	private int width;
+	private int height;
+	private int depth;
+	public Box10(int w, int h, int d){
+		width =w;
+		height = h;
+		depth =d;
+	}
+}
+public class Object {
+
+	public static void main(String[] args) {
+		int a1 =10, a2=10;
+		Box10 b1 = new Box10(10, 20, 30);
+		Box10 b2 = new Box10(10, 20, 30);
+		Box10 b3 = b2;
+		
+		//기본자료형은 값을 비교
+		System.out.println(a1==a2 ? "a1과 a2는 같다":"a1과 a2는 같지 않다");
+		//참조 자료형은 주소값을 비교
+		System.out.println(b1==b2 ? "b1과 b2는 같다":"b1과 b2는 같지 않다");
+		System.out.println(b2==b3 ? "b2과 b3는 같다":"b2과 b3는 같지 않다");
+	}
+
+}
+		System.out.println(b1.equals(b2) ? "b1과 b2는 같다":"b1과 b2는 같지 않다");
+		System.out.println(b2.equals(b3) ? "b2과 b3는 같다":"b2과 b3는 같지 않다");
+		
+		String s1 = new String("start java");
+		String s2 = new String("start java");
+		
+		System.out.println(s1.equals(s2) ?"s1과 s2는 같다":"s1과 s2는 같지 않다");
+
+
+
+
+
+
+#getter setter
+class Person{
+	private String phone;
+	
+	//getter(값불러오기) setter(값저장) 
+	//마우스->source->getter setter
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+}
+
+class Teacher extends Person{
+	public String getPhone(){
+		return "teacher:"+super.getPhone();
+	}
+}
+public class Professor {
+
+	public static void main(String[] args) {
+		Teacher t = new Teacher();
+		t.setPhone("010-1111-1111");
+		System.out.println(t.getPhone());
+
+	}
+
+}
+
+
+
+
+
+#끝말잇기게임
+import java.util.*;
+
+//한 사람의 참가자 표현
+	class Player{
+		private Scanner sc;
+		private String name;
+		private String word;
+		
+		public Player(String name){
+			this.name = name;
+			sc = new Scanner(System.in);
+		}
+		public String getName(){
+			return name;
+		}
+		
+		public String getWordFromUser(){
+			System.out.print(name+">>");
+			word = sc.next();
+			return word;
+		}
+		
+		//마지막 글자와 참가자가 말한 단어 비교해서 판단
+		//성공하면 true를 return
+		public boolean checkSuccess(String lastWord){
+			int lastIndex = lastWord.length()-1;
+			//최종 단어의 마지막 문자와 참가자가 말한 단어의 첫 문자가 같은지 비교
+			if(lastWord.charAt(lastIndex)==word.charAt(0))
+				return true;
+			else 
+				return false;
+		}
+	}
+public class WordGameApp {
+	private Scanner sc;
+	private String startWord="아버지";
+	private Player[] player;
+	
+	public WordGameApp(){
+		sc = new Scanner(System.in);
+	}
+	//게임 진행하는 메소드
+	public void run(){
+		System.out.println("===========  끝말잇기 게임 START  ===========");
+		System.out.println();
+		createPlayer();//참가자 위한 player[]생성
+		String lastWord = startWord;
+		
+		System.out.println("시작 단어는 "+lastWord+"입니다.");
+		int next = 0;//참가자들의 순서대로 증가
+		while(true){
+			String newWord = player[next].getWordFromUser();
+			//next참가자가 단어를 말하도록 함
+			if(!player[next].checkSuccess(lastWord)){
+				System.out.println(player[next].getName()+"이(가) 졌습니다");
+				break;
+			}
+			next++;//다음 참가자
+			next %=player.length;//next가 참가자의 개수를 넘는 것을 방지
+			lastWord = newWord;
+		}
+	}
+	
+	//게임 참가자 수를 입력 받고 palyer [] 생성하는 메소드
+	public void createPlayer(){
+		System.out.print("게임에 참가하는 인원 입력>>");
+		int nPlayer = sc.nextInt();
+		player = new Player[nPlayer];
+		System.out.println("참가하는 사람의 이름을 입력하세요");
+		//각 참여자들의 이름 입력받기->Player객체생성
+		for(int i=0;i<nPlayer;i++){
+			String name=sc.next();
+			player[i]=new Player(name);
+		}
+	}
+	public static void main(String[] args) {
+		WordGameApp game = new WordGameApp();
+		game.run();
+
+		System.out.println("");
+	}
+}
+

@@ -63,3 +63,7 @@
 - getter setter
 - 끝말잇기
 
+# 171109
+- 다형성
+- instanceOf
+- Vector함수

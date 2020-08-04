@@ -1,0 +1,290 @@
+#
+class Rectangle{
+	public int width;
+	public int height;
+	public Rectangle(int w, int h){
+		width = w;
+		height =h;
+	}
+	
+	public int ComputerRectangle(){
+		return width * height;
+	}
+}
+class Cube extends Rectangle{
+	public int depth;
+	public Cube(int w, int h, int d){
+		super(w, h);
+		depth=d;
+	}
+	public int ComputerCube(){
+		return super.ComputerRectangle()*depth;
+	}
+}
+
+public class CastTest {
+
+	public static void main(String[] args) {
+		Rectangle r = new Cube(10, 20, 30);
+		System.out.println("넓이 :"+r.ComputerRectangle());
+		//System.out.println("넓이 :"+r.ComputerCube()); 
+		//하위클래스의 메소드 호출 불가능
+	}
+
+}
+
+
+
+
+#다형성
+class Am{
+	int count = 1;
+	void callme(){
+		System.out.println("Am 실행, count: "+count);
+	}
+}
+class Bm extends Am{
+	int count = 2;
+	void callme(){
+		System.out.println("Bm 실행, count: "+count);
+	}
+}
+class Cm extends Am{
+	int count = 3;
+	void callme(){
+		System.out.println("Cm 실행, count: "+count);
+	}
+}
+public class PolymorphismTest {
+
+	public static void main(String[] args) {
+		Am r = new Am();
+		r.callme();
+		System.out.println("r.count: "+r.count);
+		
+		r= new Bm();
+		r.callme();
+		System.out.println("r.count: "+r.count);
+		
+		r = new Cm();
+		r.callme();
+		System.out.println("r.count: "+r.count);
+	}
+
+}
+
+
+
+
+#다형성 2
+
+class Item{
+	public int price;
+}
+class Noodle extends Item{
+	public Noodle(){
+		price = 2500;
+	}
+	public String toString(){//오버라이딩
+		return "국수";
+	}
+}
+class Mixnoodle extends Item{
+	public Mixnoodle(){
+		price = 3000;
+	}
+	public String toString(){
+		return "비빔 국수";
+	}
+}
+class Wodong extends Item{
+	public Wodong(){
+		price =2500;
+	}
+	public String toString(){
+		return "우동";
+	}
+}
+class Buyer{
+	private int money;
+	public Buyer(int money){
+		this.money = money;
+	}
+	public void buy(Item it, int count){ //다형성
+		System.out.println(it+"을(를) "+count+"개 먹었습니다");
+		money = money -(it.price*count);
+		System.out.println("현재 남은 돈: "+money);
+	}
+}
+public class Polymorphism {
+
+	public static void main(String[] args) {
+		Buyer me = new Buyer(20000);
+		me.buy(new Wodong(), 3);
+		me.buy(new Noodle(), 2);
+		me.buy(new Mixnoodle(), 2);
+
+	}
+
+}
+
+
+
+
+#instanceof 
+
+class Rectangle1{
+	public int width;
+	public int height;
+	public Rectangle1(int w, int h){
+		width =w;
+		height =h;
+	}
+	public int computerRectangle(){
+		return width * height;
+	}
+}
+
+class Cube1 extends Rectangle1{
+	public int depth;
+	public Cube1(int w, int h, int d){
+		super(w, h);
+		depth =d;
+	}
+	public int computerCube(){
+		return super.computerRectangle()*depth;
+	}
+}
+public class Instance {
+
+	public static void main(String[] args) {
+		Rectangle1 r = new Rectangle1(10, 20);
+		Cube1 c = new Cube1(10, 20, 30);
+		System.out.println("r이 Rec의 객체? "+(r instanceof Rectangle1));
+		System.out.println("r이 Cube의 객체? "+(r instanceof Cube1));
+		System.out.println("c가 Rec의 객체? "+(c instanceof Rectangle1));
+		System.out.println("c가 Cube의 객체? "+(c instanceof Cube1));
+		System.out.println("=============형 변환 이후=============");
+		r = new Cube1(20, 30, 40);
+		System.out.println("r이 Rec의 객체? "+(r instanceof Rectangle1));
+		System.out.println("r이 Cube의 객체? "+(r instanceof Cube1));
+		System.out.println("c가 Rec의 객체? "+(c instanceof Rectangle1));
+		System.out.println("c가 Cube의 객체? "+(c instanceof Cube1));
+		System.out.println("======================================");
+		System.out.println("r이 Object의 객체? "+(c instanceof Object));
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+#다형성 & Vector함수
+
+import java.util.*;
+class Product{
+	int price;
+	int bonusPoint;
+	
+	Product(){
+		price =0;
+		bonusPoint=0;
+	}
+	Product(int price){
+		this.price= price;
+		bonusPoint=(int)(price/10.0);
+	}
+}
+class Tv extends Product{
+	Tv(){
+		super(100);
+	}
+	public String toString(){
+		return "TV";
+	}
+}
+
+class Computer extends Product{
+	Computer(){
+		super(200);
+	}
+	public String toString(){
+		return "computer";
+	}
+}
+class Audio extends Product{
+	Audio(){
+		super(50);
+	}
+	public String toString(){
+		return "Audio";
+	}
+}
+
+class Buyer1{
+	int money = 1000;
+	int bonusPoint = 0;
+	Vector item = new Vector();
+	//10개의 객체를 저장(배열대신)저장후 자동으로 크기 증가
+	//배열과 달리 클래스 객체도 저장 가능
+	
+	void buy(Product p){
+		if(money <p.price){
+			System.out.println("잔액 부족");
+			return;
+		}
+		money -=p.price;
+		bonusPoint +=p.bonusPoint;
+		item.add(p);//Vector에객체추가 성공하면 true/실패하면 false반환
+		System.out.println(p+"을/를 구입");
+	}
+	void refund(Product p){
+		if(item.remove(p)){//Vector에객체 제거
+			money +=p.price;
+			bonusPoint -=p.bonusPoint;
+			System.out.println(p+"을/를 반품");
+		}else{
+			System.out.println("구입하신 제품 중 해당 제품이 없습니다");
+		}
+	}
+	void summary(){
+		int sum =0;
+		String itemList ="";
+		if(item.isEmpty()){//Vector가 비어잇는지 검사
+			System.out.println("구입하신 제품이 없습니다");
+			return;
+		}
+		for(int i=0; i<item.size();i++){//size->vector에 저장된 객체의 개수 반환
+			Product p = (Product)item.get(i);//지정된 위치의 객체 반환(형변환 필요)
+			sum +=p.price;
+			itemList += (i==0)? ""+p: ", "+p;
+		}
+		System.out.println("구입하신 물품의 총 금액은 "+sum+"만원입니다");
+		System.out.println("구입하신 제품은 "+itemList+"입니다");
+	}
+}
+public class PolyArgument {
+
+	public static void main(String[] args) {
+		Buyer1 b = new Buyer1();
+		Tv tv = new Tv();
+		Computer com = new Computer();
+		Audio audio = new Audio();
+		
+		b.buy(tv);
+		b.buy(com);
+		b.buy(audio);
+		b.summary();
+		System.out.println();
+		b.refund(com);
+		b.summary();
+		
+	}
+
+}

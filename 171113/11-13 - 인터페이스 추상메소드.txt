@@ -1,0 +1,133 @@
+#추상화 클래스 추상화 메소드 -> 상속시 반드시 재정의(오버라이딩
+
+abstract class Shape{//추상화 클래스
+	abstract void draw();//추상화 메소드 -> 상속시 반드시 재정의(오버라이딩)
+	abstract void comArea(double a, double b);
+}
+class Cir extends Shape{
+	void draw(){
+		System.out.println("원을 그리는 기능");
+	}
+	void comArea(double r1, double r2){
+		System.out.println("원의 넓이: "+(3.14*r1*r2));
+	}
+}
+class Rec extends Shape{
+	void draw(){
+		System.out.println("사각형을 그리는 기능");
+	}
+	void comArea(double h, double v){
+		System.out.println("사각형의 넓이: "+(h*v));
+	}
+}
+class Tri extends Shape{
+	void draw(){
+		System.out.println("삼각형을 그리는 기능");
+	}
+	void comArea(double a, double h){
+		System.out.println("삼각형의 넓이: "+(h*a/2));
+	}
+}
+public class AbstractTest {
+
+	public static void main(String[] args) {
+		System.out.println("==추상 메소드 이용한 다형성==");
+		Shape s = new Cir();
+		s.draw();
+		s.comArea(5.0, 5.0);
+		s= new Rec();
+		s.draw();
+		s.comArea(5.0, 10.0);
+		s = new Tri();
+		s.draw();
+		s.comArea(5.0, 10.0);
+
+	}
+
+}
+
+
+
+#인터페이스 -> 상수와 추상메소드만 가짐
+ 		-> 인터페이스끼리는 다중상속가능(extends)
+		->상속받을 시 implements구현 -> 반드시 재정의 해줘야함(다중implements구현가능)
+		->인터페이스는 생성자 만들수 X
+
+
+abstract class Fig{
+	abstract void draw();
+}
+
+interface Shape1{
+	public void comArea1(double a, double b);
+}
+
+class Tri2 extends Fig implements Shape1{
+	void draw(){
+		System.out.println("삼각형을 그리는 기능");
+	}
+	public void comArea1(double a, double h){
+		System.out.println("삼각형의 넓이 : "+(a*h/2));
+	}
+}
+
+class Rec2 extends Fig implements Shape1{
+	void draw(){
+		System.out.println("사각형을 그리는 기능");
+	}
+	public void comArea1(double a, double h){
+		System.out.println("사각형의 넓이 : "+(a*h));
+	}
+}
+class Oval2 extends Fig implements Shape1{
+	void draw(){
+		System.out.println("원을 그리는 기능");
+	}
+	public void comArea1(double a, double h){
+		System.out.println("원의 넓이 : "+(a*h*3.14));
+	}
+}
+class Poly{
+	public void pdraw(Fig f){
+		f.draw();
+	}
+	public void pcomArea(Shape1 s, double a, double b){
+		s.comArea1(a, b);
+	}
+}
+public class Interface {
+
+	public static void main(String[] args) {
+		Poly p = new Poly();
+		Fig fg1 = new Tri2();
+		Fig fg2 = new Rec2();
+		Fig fg3 = new Oval2();
+		Shape1 s1 = new Tri2();
+		Shape1 s2 = new Rec2();
+		Shape1 s3 = new Oval2();
+		p.pdraw(fg1);
+		p.pcomArea(s1, 4, 4);
+		p.pdraw(fg2);
+		p.pcomArea(s2, 4, 4);
+		p.pdraw(fg3);
+		p.pcomArea(s3, 4, 4);
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

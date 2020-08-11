@@ -1,0 +1,300 @@
+##lbi5320.jslhrd.com/java
+ 
+ 
+ 
+자바의 GUI (Graphical User Interface)
+ 
+GUI의 목적
+그래픽 이용, 사용자에게 이해하기 쉬운 모양으로 정보 제공,.....
+ 
+AWT와 Swing 패키지
+Swing(스윙) -> 순수 자바 언어로 구현
+ 
+ 
+ 
+ 
+ 
+import javax.swing.*; // 객체지향프로그램.
+import java.awt.*;
+ 
+class MyFrame {
+	MyFrame() { // 생성자.
+		JFrame f = new JFrame("내가 만든 창"); // java.awt에서 제공.
+		f.setLocation(200, 300); // 창이 생기는 위치. 픽셀단위.
+		f.setSize(300, 400); // 창의 사이즈. 픽셀단위.
+		f.setResizable(false); // 창의 사이즈를 임의로 조절하지 못하게 만듬.
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 닫기버튼을 눌렀을 때 프로세스도 같이 끝남.
+		f.setVisible(true); // 제일 마지막에 작성.
+	}
+}
+public class FrameTest {
+ 
+	public static void main(String[] args) {
+		MyFrame f1 = new MyFrame(); // 메인은 짧으면 짧을수록 좋음. 처리는 클래스에서.
+	}
+ 
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+import javax.swing.*; // 객체지향프로그램.
+import java.awt.*;
+ 
+class MyFrame extends JFrame {
+	MyFrame() {
+		setLocation(200, 300); // this. 이 생략된 것. (this.setLocation)
+		setTitle("창 만들기");
+		setSize(300, 400);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton button = new JButton("메롱");
+		JButton button1 = new JButton("까꿍");
+		this.setLayout(new FlowLayout()); // FlowLayout -> 가운데에서부터 물흐르듯이.
+		this.add(button);
+		this.add(button1);
+		
+		setVisible(true);
+	}
+}
+public class FrameTest {
+ 
+	public static void main(String[] args) {
+		MyFrame f1 = new MyFrame();
+	}
+ 
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+import java.awt.*;
+import javax.swing.*;
+ 
+class Comp extends JFrame {
+	public Comp() {
+		this.setTitle("컴포넌트 창");
+		this.setSize(300, 200);
+		
+		JPanel panel = new JPanel(); // JPanel -> 가상의 공간. 포토샵의 layer같은 기능. 자동적으로 FlowLayout으로 잡힘.
+		JLabel label = new JLabel("안녕하세요");
+		JButton button = new JButton("인사");
+		panel.add(label);
+		panel.add(button);
+		add(panel);
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+	}
+}
+ 
+public class MyFrame2 {
+ 
+	public static void main(String[] args) {
+		Comp c = new Comp();
+	}
+ 
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+import java.awt.*;
+import javax.swing.*;
+ 
+class MF3 extends JFrame {
+	public MF3() {
+		this.setTitle("레이아웃 잡기");
+		this.setSize(400, 500);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(new Button("Center"), BorderLayout.CENTER); // 기본적으로 레이아웃은 BorderLayout.
+		add(new Button("East"), BorderLayout.EAST);
+		add(new Button("West"), BorderLayout.WEST);
+		add(new Button("North"), BorderLayout.NORTH);
+		add(new Button("South"), BorderLayout.SOUTH);
+		
+		this.setVisible(true);
+	}
+}
+ 
+public class BorderTest {
+ 
+	public static void main(String[] args) {
+		MF3 m = new MF3();
+	}
+ 
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ import java.awt.*;
+import javax.swing.*;
+ 
+public class ContentPaneEx extends JFrame {
+	ContentPaneEx() {
+		setTitle("ContentPane과 JFrame");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Container contentPane = getContentPane();
+		contentPane.setBackground(Color.ORANGE);
+		contentPane.setLayout(new FlowLayout());
+		contentPane.add(new JButton("OK"));
+		contentPane.add(new JButton("Cancel"));
+		contentPane.add(new JButton("Ignore"));
+		
+		setSize(350, 150);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new ContentPaneEx();
+	}
+ 
+}
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

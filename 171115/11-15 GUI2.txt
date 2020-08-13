@@ -1,0 +1,359 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class FlowLayoutEx extends JFrame {
+	FlowLayoutEx(){
+		setTitle("FlowLayoutSample");//창이름
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//엑스표 누르면 꺼짐
+		Container c =getContentPane();
+		
+		c.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 40));//왼쪽, 수평, 수직
+		c.add(new JButton("add"));
+		c.add(new JButton("sub"));
+		c.add(new JButton("mul"));
+		c.add(new JButton("div"));
+		c.add(new JButton("Calculate"));
+		
+		setSize(300, 250);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new FlowLayoutEx();
+
+	}
+
+}
+
+
+#
+
+import javax.swing.*;
+import java.awt.*;
+public class BorderLayoutEx extends JFrame{
+	BorderLayoutEx(){
+		setTitle("BorderLayoutSample");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c= getContentPane();
+		
+		c.setLayout(new BorderLayout());
+		c.add(new JButton("add"), BorderLayout.NORTH);
+		c.add(new JButton("sub"), BorderLayout.SOUTH);
+		c.add(new JButton("mul"), BorderLayout.EAST);
+		c.add(new JButton("div"), BorderLayout.WEST);
+		c.add(new JButton("Calculate"), BorderLayout.CENTER);
+		
+		setSize(300, 200);
+		setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		new BorderLayoutEx();
+
+	}
+
+}
+
+
+
+
+
+#버튼 브이자 만들기 생각해보기!!!!
+
+import javax.swing.*;
+import java.awt.*;
+public class NullContainerEx extends JFrame {
+	NullContainerEx(){
+		setTitle("NullContainer Sample");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c= getContentPane();
+		
+		c.setLayout(null);
+		
+		JLabel la = new JLabel("Hello, Press Button");
+		la.setLocation(130, 50);
+		la.setSize(200, 20);
+		c.add(la);
+		for(int i=1;i<=5;i++){
+			JButton b= new JButton(Integer.toString(i));
+			b.setLocation(i*15, i*15);
+			b.setSize(50, 20);
+			c.add(b);
+		}
+		for(int j =6;j<=9;j++){
+			JButton d= new JButton(Integer.toString(j));
+			d.setLocation(j*15, j*15);
+			d.setSize(50, 20);
+			c.add(d);
+		}
+		setSize(300, 200);
+		setVisible(true);
+		
+	}
+	public static void main(String[] args) {
+		new NullContainerEx();
+
+	}
+
+}
+
+
+
+
+#라벨 쓰는칸
+
+import javax.swing.*;
+import java.awt.*;
+
+public class GridLayoutEx extends JFrame{
+	GridLayoutEx(){
+		setTitle("FridLayout Sample");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c =getContentPane();
+		
+		GridLayout grid = new GridLayout(4, 2);
+		grid.setVgap(5);
+		c.setLayout(grid);
+		c.add(new JLabel("이름"));
+		c.add(new JTextField(""));
+		c.add(new JLabel("학번"));
+		c.add(new JTextField(""));
+		c.add(new JLabel("학과"));
+		c.add(new JTextField(""));
+		c.add(new JLabel("과목"));
+		c.add(new JTextField(""));
+		
+		setSize(300, 200);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new GridLayoutEx();
+
+	}
+
+}
+
+
+
+#0~9까지 일렬정렬
+import javax.swing.*;
+import java.awt.*;
+
+public class TenButtonEx extends JFrame {
+	TenButtonEx(){
+		setTitle("Ten Button Frame");//super("Ten Button Frame");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c = getContentPane();
+		c.setLayout(new GridLayout(1,10));
+	
+		JButton[] btn = new JButton[10];
+		Color [] color ={Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN,
+						Color.CYAN, Color.BLUE, Color.MAGENTA, Color.GRAY,
+						Color.PINK, Color.LIGHT_GRAY};
+		for(int i=0; i<btn.length;i++){
+			btn[i] =new JButton(Integer.toString(i));
+			btn[i].setOpaque(true);//투명도
+			btn[i].setBackground(color[i]);
+			c.add(btn[i]);
+		}
+		
+		setSize(500, 200);
+		setVisible(true);
+		
+	}
+	public static void main(String[] args) {
+		new TenButtonEx();
+
+	}
+
+}
+
+
+
+#4*4
+import javax.swing.*;
+import java.awt.*;
+public class Color_Frame extends JFrame{
+	Color_Frame(){
+		setTitle("4x4 Color Frame");//super("Ten Button Frame");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Container c = getContentPane();
+		c.setLayout(new GridLayout(4,4));
+	
+		JLabel[] b = new JLabel[16];
+		Color [] color ={Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN,Color.DARK_GRAY,
+						Color.CYAN, Color.PINK,Color.BLUE, Color.MAGENTA, Color.GRAY, Color.WHITE,
+						 Color.LIGHT_GRAY, Color.BLUE, Color.MAGENTA, Color.PINK,
+						Color.BLACK, };
+		for(int i=0; i<b.length;i++){
+			b[i] =new JLabel(Integer.toString(i));
+			b[i].setOpaque(true);//투명도
+			b[i].setBackground(color[i]);
+			c.add(b[i]);
+		}
+		
+		setSize(500, 200);
+		setVisible(true);
+		
+	
+	}
+	public static void main(String[] args) {
+		new Color_Frame();
+	}
+
+}
+
+
+
+
+#프레임 안에 레이아웃 추가
+
+import javax.swing.*;
+import java.awt.*;
+
+public class SimpleSwingFrame extends JFrame{
+	SimpleSwingFrame(){
+		setTitle("Open Challenge 9");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(new NorthPanel(), BorderLayout.NORTH);
+		add(new CenterPanel(), BorderLayout.CENTER);
+		setSize(300, 300);
+		setVisible(true);
+	}
+	//내부 클래스
+	class NorthPanel extends JPanel{
+		public NorthPanel() {
+			setBackground(Color.LIGHT_GRAY);
+			//setLayout(new FlowLayout());
+			add(new JButton("Open"));
+			add(new JButton("Read"));
+			add(new JButton("Close"));
+		}
+	}
+	
+	class CenterPanel extends JPanel{
+		public CenterPanel(){
+			setLayout(null);
+			JLabel a = new JLabel("Hello");
+			a.setSize(100, 20);
+			a.setLocation(100, 10);
+			
+			JLabel b = new JLabel("JAVA");
+			b.setSize(100, 20);
+			b.setLocation(20, 200);
+			
+			JLabel c = new JLabel("Love");
+			c.setSize(100, 20);
+			c.setLocation(200, 150);
+			
+			add(a);
+			add(b);
+			add(c);
+		}
+	}
+	public static void main(String[] args) {
+		new SimpleSwingFrame();
+
+	}
+
+}
+
+
+
+
+
+#랜덤으로 사각형 찍기
+
+import java.awt.*;
+import javax.swing.*;
+
+public class RandomLabelFrame extends JFrame{
+	public RandomLabelFrame(){
+		super("Random Labels");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		Container c= getContentPane();
+		c.setLayout(null);
+		
+		for(int i=0; i<20; i++){
+			JLabel l = new JLabel(Integer.toString(i));
+			l.setOpaque(true);
+			l.setBackground(Color.BLUE);
+			
+			int x = (int)(Math.random()*200)+50;
+			int y =(int)(Math.random()*200)+50;
+			
+			l.setSize(10, 10);
+			l.setLocation(x, y);
+			c.add(l);
+		}
+		setSize(300, 300);
+		setVisible(true);
+		
+	}
+	public static void main(String[] args) {
+		new RandomLabelFrame();
+
+	}
+
+}
+
+
+
+
+#계산기
+import javax.swing.*;
+
+
+import java.awt.*;
+
+public class Calculator extends JFrame{
+	Calculator(){
+		setTitle("Calculator");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		add(new NorthPanel(), BorderLayout.NORTH);
+		add(new CenterPanel(), BorderLayout.CENTER);
+		setSize(300, 300);
+		setVisible(true);
+	}
+	class NorthPanel extends JPanel{
+		public NorthPanel(){
+			Container c= getContentPane();
+			c.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 20));
+			
+			c.add(new JTextField("\t"));
+			c.add(new JButton("clear"));
+		}
+}
+	class CenterPanel extends JPanel{
+		public CenterPanel(){
+			setLayout(new GridLayout(5, 4, 5,5));
+			add(new JButton("AC"));
+			add(new JButton("+/-"));
+			add(new JButton("%"));
+			add(new JButton("/"));
+			add(new JButton("7"));
+			add(new JButton("8"));
+			add(new JButton("9"));
+			add(new JButton("X"));
+			add(new JButton("4"));
+			add(new JButton("5"));
+			add(new JButton("6"));
+			add(new JButton("-"));
+			add(new JButton("1"));
+			add(new JButton("2"));
+			add(new JButton("3"));
+			add(new JButton("+"));
+			add(new JButton(" "));
+			add(new JButton("0"));
+			add(new JButton("."));
+			add(new JButton("="));
+		}
+	}
+	public static void main(String[] args) {
+		new Calculator();
+
+	}
+
+}
+

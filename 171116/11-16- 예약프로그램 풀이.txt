@@ -1,0 +1,167 @@
+
+#메인 ->Reserve
+import java.util.*;
+public class Reserve {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		SeatType[] aSeatType = new SeatType[3];
+		
+		aSeatType[0] = new SeatType('s', 10);
+		aSeatType[1] = new SeatType('A', 10);
+		aSeatType[2] = new SeatType('B', 10);
+		
+		int choice = 0;
+		while(choice != 4){
+			int type;
+			System.out.print("(1)예약  (2)조회  (3)취소  (4)끝내기>>");
+			choice = sc.nextInt();
+			switch(choice){
+			case 1:
+				System.out.print("좌석 구분 (1)S석  (2)A석  (3)B석>>");
+				type = sc.nextInt();
+				if(type<1 || type>3){
+					System.out.println("잘못된 좌석 타입입니다.");
+					break;
+				}
+				aSeatType[type-1].reserve();
+				break;
+			case 2:
+				for(int i=0; i<aSeatType.length;i++){
+					aSeatType[i].show();
+				}
+				System.out.println("<<조회 완료>>");
+				break;
+			case 3:
+				System.out.print("좌석 구분 (1)S석  (2)A석  (3)B석>>");
+				type = sc.nextInt();
+				if(type<1 || type>3){
+					System.out.println("잘못된 좌석 타입입니다.");
+					break;
+				}
+				aSeatType[type-1].cancel();
+				break;
+			case 4:
+				System.out.println("[프로그램 종료]");
+				break;
+			default:
+				System.out.println("메뉴를 잘못 선택");	
+			}
+			
+		}
+	}
+
+}
+
+
+
+
+
+#Seat
+
+public class Seat {
+	private String name;
+	
+	Seat(){
+		name = null;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void cancel(){
+		name = null;
+	}
+	
+	public void reserve(String name){
+		this.name = name;
+	}
+	
+	public boolean isOccupied(){
+		if(name == null)//예약 안되어 잇음
+			return false;
+		else
+			return true; 
+	}
+	
+	public boolean match(String name){
+		return (name.equals(this.name));
+	}
+}
+
+
+
+
+
+
+#SeatType
+import java.util.*;
+
+public class SeatType {
+	private char type;
+	private Seat[] aSeat;
+	
+	SeatType(char type, int num){
+		this.type = type;
+		aSeat = new Seat[num];
+		for(int i=0; i<aSeat.length;i++){
+			aSeat[i] =new Seat();
+		}
+	}
+	
+	public boolean reserve(){
+		Scanner sc =new Scanner(System.in);
+		int seatNum;
+		String name;
+		show();
+		System.out.print("이름>>");
+		name = sc.nextLine();
+		System.out.print("좌석 번호>>");
+		seatNum = sc.nextInt();
+		
+		if(seatNum<1||seatNum >= aSeat.length){
+			System.out.println("잘못된 좌석번호 입니다.");
+			return false;
+		}
+		if(aSeat[seatNum-1].isOccupied()){
+			System.out.println("이미 예약된 좌석입니다.");
+			return false;
+		}
+		aSeat[seatNum-1].reserve(name);
+		return true;
+	}
+	
+	public void show(){
+		System.out.print(type +">>");
+		for(int i =0; i<aSeat.length;i++){
+			if(aSeat[i].isOccupied())
+				System.out.print(aSeat[i].getName());
+			else 
+				System.out.print("---");
+		}
+		System.out.println();
+	}
+	
+	public boolean cancel(){
+		Scanner sc = new Scanner(System.in);
+		show();
+		System.out.print("이름>>");
+		String name = sc.nextLine();
+		if(name != null){
+			for(int i=0; i<aSeat.length;i++){
+				if(aSeat[i].match(name)){
+					aSeat[i].cancel();
+					return true;
+				}
+			}
+			System.out.println("예약자 이름을 찾을 수 없습니다");
+		}
+		return false;//예약자 이름 찾지 못함
+	}
+}
+

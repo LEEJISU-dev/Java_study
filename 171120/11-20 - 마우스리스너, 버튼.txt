@@ -1,0 +1,415 @@
+# 맨 밑에 확인 취소 버튼 만들기
+
+import javax.swing.*;
+import java.awt.*;
+
+class MyFrame extends JFrame{
+	MyFrame(){
+		setTitle("Hi");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocation(200, 300);
+		setSize(200, 300);
+		
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridLayout(1, 2));
+		JButton b1 = new JButton("확인");
+		JButton b2 = new JButton("취소");
+		p1.add(b1);
+		p1.add(b2);
+		
+		add(p1, BorderLayout.SOUTH);
+		
+		setVisible(true);
+	}
+}
+public class Ex1 {
+
+	public static void main(String[] args) {
+		MyFrame f = new MyFrame();
+
+	}
+
+}
+
+
+
+
+
+
+
+#마우스 대면 색깔 바꾸기
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ListenerMouseEx extends JFrame {
+	
+	public ListenerMouseEx() {
+		setTitle("버튼에 마우스 이벤트 리스터 작성");
+		setLayout(new FlowLayout());
+		setLocation(700, 400);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton b = new JButton("Mouse Event 테스트 버튼");
+		b.setBackground(Color.YELLOW);
+		MyMouseListener listener = new MyMouseListener();
+		b.addMouseListener(listener);
+		add(b);
+		setSize(300, 150);
+		setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new ListenerMouseEx();
+
+	}
+
+}
+class MyMouseListener implements MouseListener{
+
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		JButton b = (JButton)e.getSource();
+		b.setBackground(Color.RED);
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		JButton b = (JButton)e.getSource();
+		b.setBackground(Color.YELLOW);
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+}
+
+
+
+
+
+
+
+#버튼 누르면 바꾸기 action->액션
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class ListenerSample extends JFrame{
+	public ListenerSample() {
+		setTitle("Action Event Listener");
+		setLayout(new FlowLayout());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JButton b = new JButton("Action");
+		MyActionListener listener = new MyActionListener();
+		b.addActionListener(listener);
+		add(b);
+		setSize(300, 150);
+		setVisible(true);
+	}
+	public static void main(String[] args) {
+		new ListenerSample();
+
+	}
+
+}
+class MyActionListener implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton b = (JButton)e.getSource();
+		if(b.getText().equals("Action"))
+			b.setText("액션");
+		else
+			b.setText("Action");
+		
+	}
+	
+}
+
+
+
+
+
+
+
+
+#마우스 누르는대로 hello 움직이기
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class MouseListenerEx extends JFrame{
+	JLabel la;
+	
+	public MouseListenerEx() {
+		setTitle("마우스 이벤트 예제");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel contentPane = new JPanel();
+		setContentPane(contentPane);
+		setLayout(null);
+		contentPane.addMouseListener(new MyMouseListener()); 
+		
+		la = new JLabel("hello");
+		la.setSize(50, 20);
+		la.setLocation(30, 30);
+		contentPane.add(la);
+		
+		setSize(200, 200);
+		setVisible(true);
+	}
+	class MyMouseListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			int x = e.getX();
+			int y = e.getY();
+			la.setLocation(x, y);
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	public static void main(String[] args) {
+		new MouseListenerEx();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 버튼 누르면 이름 바꾸기
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class EventEx implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		JButton button= (JButton)e.getSource();
+		button.setText("dd");
+		
+	}
+	
+}
+class MyListener extends JFrame{
+	private JButton button;
+	MyListener(){
+		this.setTitle("EVENT");
+		this.setSize(200, 300);
+		this.setLocation(700, 300);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new FlowLayout());
+		
+		button = new JButton("버튼을 누르시오");
+		button.addActionListener(new EventEx());
+		add(button);
+		
+		this.setVisible(true);
+	}
+}
+public class Test4 {
+
+	public static void main(String[] args) {
+		MyListener l = new MyListener();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#누르면 색상 바뀌는 버튼
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class MyTest3 extends JFrame{
+	private JButton button1, button2;
+	private JPanel panel;
+	MyEvent6 listener = new MyEvent6();
+	
+	public MyTest3(){
+		this.setTitle("생상 바꾸기 창");
+		this.setSize(500, 500);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		panel = new JPanel();
+		button1 = new JButton("노란색");
+		button1.addActionListener(listener);
+		button2 = new JButton("분홍색");
+		button2.addActionListener(listener);
+		panel.add(button1);
+		panel.add(button2);
+		add(panel);
+		this.setVisible(true);
+	}
+
+ public class MyEvent6 implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==button1){
+			panel.setBackground(Color.yellow);
+		}else if (e.getSource()==button2){
+			panel.setBackground(Color.pink);
+		}
+		
+	}
+	
+}
+ }
+public class Test3 {
+
+	public static void main(String[] args) {
+		MyTest3 t3 = new MyTest3();
+
+	}
+
+}
+
+
+
+
+
+
+
+#버튼 위치
+
+import javax.swing.*;
+import java.awt.*;
+class MF2 extends JFrame{
+	MF2(){
+		setTitle("Hi");
+		setSize(200, 300);
+		setLocation(200, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel p1 = new JPanel();
+		p1.setLayout(new GridLayout(1, 2));
+		JButton b1 = new JButton("오른쪽");
+		JButton b2 = new JButton("왼쪽");
+		p1.add(b1);
+		p1.add(b2);
+		add(p1, BorderLayout.NORTH);
+		
+		JPanel p2 = new JPanel();
+		p2.setLayout(new GridLayout(2, 1));
+		JButton b3 = new JButton("상");
+		JButton b4 = new JButton("하");
+		p2.add(b3);
+		p2.add(b4);
+		
+		JButton p5 = new JButton("입력");
+		JPanel p3 = new JPanel();
+		p3.setLayout(new GridLayout(2, 1));
+		JButton b6 = new JButton("좌");
+		JButton b7 = new JButton("우");
+		p3.add(b6);
+		p3.add(b7);
+		
+		JPanel p4 = new JPanel();
+		p4.setLayout(new GridLayout(1, 3));
+		p4.add(p2);
+		p4.add(p5);
+		p4.add(p3);
+		add(p4, BorderLayout.SOUTH);
+		
+		this.setVisible(true);
+	}
+}
+public class Test2 {
+
+	public static void main(String[] args) {
+		MF2 f2 = new MF2();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

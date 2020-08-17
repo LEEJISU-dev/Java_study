@@ -1,0 +1,61 @@
+#현금 분리하기 -> 배열 
+
+import java.util.*;
+public class Test1 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		int [] unit={50000, 10000, 1000, 500, 100, 50, 10, 1};
+		
+		System.out.print("금액을 입력하세요>>");
+		int price = sc.nextInt();
+		
+		for(int i=0; i<unit.length;i++){
+			int res = price/unit[i];
+			
+			if(res>0){
+				String str1, str2;
+				if(i<=2){
+					str1="원권";
+					str2="매";
+				}
+				else{
+					str1="원 동전";
+					
+					str2="개";
+				}
+				System.out.println(unit[i]+str1+res+str2);
+				price = price % unit[i];
+			}
+		}
+
+	}
+
+}
+
+
+
+
+#369 박수 
+
+public class Test2 {
+
+	public static void main(String[] args) {
+		String []arr ={"박수 한번 ","박수 두번"};
+		int res,num, count=0;
+		for(int i=1; i<100;i++){
+			num=i;
+			for(res =num%10;num>0;res=num%10){
+				if(res==3||res==6|res==9)
+					count++;
+				num = num/10;
+			}
+			if(count>0)
+				System.out.println(i+" "+arr[count-1]);
+			count=0;
+		}
+
+	}
+
+}

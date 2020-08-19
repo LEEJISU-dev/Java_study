@@ -89,14 +89,26 @@
 	- 예약프로그램 풀이 (171110)
 -----------------------------------------------------
 
-## 3. 자바의 GUI
+## 3. 자바의 GUI (Graphical User Interface)
 ### 171114
-	- GUI (Graphical User Interface)
+	- 창 생성하기
+	- 버튼 삽입
+	- 레이아웃
 
 ### 171115
-	- GUI (Graphical User Interface)
+	- FlowLayout
+	- BorderLayout
+	- JLabel / JTextField
+	- 버튼 삽입 ( 브이자, 4*4, 일렬정렬 )
+	- Frame
 	- 계산기 만들기(모양)
 
 ### 171120
-	- 마우스 리스너
-	- 버튼
+	- 버튼 삽입
+	- MouseListener()
+	- ActionListener()
+	- BorderLayout / GridLayout
+
+### 171122
+	- KeyListener()
+	- MouseListener()

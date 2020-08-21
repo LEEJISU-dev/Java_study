@@ -1,0 +1,257 @@
+#숫자입력-> 제곱한 값 출력
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class MyText extends JFrame{
+	private JButton button;
+	private JTextField text, result;
+	
+	MyText(){
+		ButtonListener listener = new ButtonListener();
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("숫자 입력"));
+		text = new JTextField(15);
+		text.addActionListener(listener);
+		panel.add(text);
+		panel.add(new JLabel("제곱한 값"));
+		result = new JTextField(15);
+		result.setEditable(false);//수정하는 것을 막음
+		panel.add(result);
+		
+		button = new JButton("OK");
+		button.addActionListener(listener);
+		panel.add(button);
+		
+		
+		setSize(300, 130);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(panel);
+		setVisible(true);
+	}
+	//내부 클래스
+	private class ButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource()==button||e.getSource()==text){
+				String name = text.getText();
+				int val = Integer.parseInt(name);
+				result.setText(""+(val*val));
+				text.requestFocus();//키보드 포커스 주기
+				
+			}
+			
+		}
+		
+	}
+}
+public class Text {
+
+	public static void main(String[] args) {
+		new MyText();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+#카운터 감소/증가/초기화
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class MyCounter extends JFrame implements ActionListener{
+	private JLabel label, label1;
+	private JButton button, button1, button2;
+	private int count =0;
+	
+	MyCounter(){
+		JPanel panel = new JPanel();
+		label = new JLabel("Counter");
+		panel.add(label);
+		
+		label1 = new JLabel(""+count);
+		label1.setFont(new Font("Serif", Font.BOLD |Font.ITALIC, 100));//클래스 이름 통해서접근
+		panel.add(label1);
+		
+		setSize(300, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(panel);
+		
+		button = new JButton("카운터 증가");
+		panel.add(button);
+		button.addActionListener(this);
+		
+		button1 = new JButton("카운터 감소");
+		panel.add(button1);
+		button1.addActionListener(this);
+		
+		button2 = new JButton("초기화");
+		panel.add(button2);
+		button2.addActionListener(this);
+		setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==button){
+			count++;
+			label1.setText(count+"");
+		}else if(e.getSource()==button1){
+			count--;
+			label1.setText(count+"");
+		}else if(e.getSource()==button2){
+			count=0;
+			label1.setText(count+"");
+		}
+		
+		
+	}
+}
+public class Count {
+
+	public static void main(String[] args) {
+		new MyCounter();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+#환율계산기
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class Change extends JFrame{
+	private JButton b1, b2;
+	private JTextField t1, t2;
+	
+	Change(){
+		Listener listener = new Listener();
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("금액"));
+		t1 = new JTextField(15);
+		t1.addActionListener(listener);
+		panel.add(t1);
+		
+		
+		b1 = new JButton("엔화");
+		b1.addActionListener(listener);
+		panel.add(b1);
+		b2 = new JButton("달러");
+		b2.addActionListener(listener);
+		panel.add(b2);
+		t2 = new JTextField(15);
+		t2.addActionListener(listener);
+		t2.setEditable(false);
+		panel.add(t2);
+		setSize(300, 130);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(panel);
+		setVisible(true);
+		
+	}
+	private class Listener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String mon = t1.getText();
+			double won = Integer.parseInt(mon);
+			if(e.getSource()==b1){
+				t2.setText(""+(won*0.98));
+			}else if(e.getSource() ==b2){
+				t2.setText(""+(won*1.1));
+			}
+			
+		}
+		
+	}
+}
+public class Test1 {
+
+	public static void main(String[] args) {
+		new Change();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+#세자리 랜덤 숫자 출력
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class MySpin extends JFrame implements ActionListener{
+	private JLabel [] labels;
+	private JButton button;
+	private int numbers[];
+	
+	MySpin(){
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		labels = new JLabel[3];
+		numbers = new int[3];
+		
+		for(int i=0; i<3;i++){
+			labels[i]= new JLabel(""+numbers[i]);
+			labels[i].setFont(new Font("serif", Font.BOLD|Font.ITALIC, 100));
+			labels[i].setSize(100, 100);
+			labels[i].setLocation(100+100*i, 20);
+			panel.add(labels[i]);
+		}
+		
+		button = new JButton("스핀");
+		button.setSize(250, 50);
+		button.setLocation(100, 150);
+		panel.add(button);
+		button.addActionListener(this);
+		
+		setSize(500, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		add(panel);
+		setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		for(int i=0; i<3;i++){
+			numbers[i]=(int)(Math.random()*10);
+			labels[i].setText(""+numbers[i]);
+		}
+		
+	}
+}
+public class Spin {
+
+	public static void main(String[] args) {
+		new MySpin();
+
+	}
+
+}

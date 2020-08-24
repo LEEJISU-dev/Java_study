@@ -1,0 +1,160 @@
+#클릭-> 이미지 출력
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Image extends JFrame implements ActionListener{
+	private JPanel panel;
+	private JLabel label;
+	private JButton b;
+	
+	Image(){
+		setTitle("이미지 레이블");
+		setSize(300, 250);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		panel = new JPanel();
+		label = new JLabel("이미지를 보려면 아래 버튼을 클릭하세요");
+		b = new JButton("이미지 레이블");
+		b.addActionListener(this);
+		
+		panel.add(label);
+		panel.add(b);
+		add(panel);
+		setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		new Image();//Image i = new Image();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		ImageIcon dog = new ImageIcon("dog.png");
+		label.setIcon(dog);
+		label.setText(null);
+		
+	}
+
+}
+
+
+
+
+
+
+
+#체크박스
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+//아이템 선택->클릭은 액션리스너
+public class CheckBox extends JPanel implements ItemListener{
+	JCheckBox[] buttons = new JCheckBox[3];//flow->jpanel상속받아서
+	String[] f = {"apple", "grape", "orange"};
+	JLabel[] picLabel = new JLabel[3];
+	ImageIcon[] icon = new ImageIcon[3];
+	
+	CheckBox(){
+		//setLayout(new GridLayout(1, 4));//행을 고정 
+		super.setLayout(new GridLayout(0, 4));//열만 고정 행은 자동생성
+		for(int i=0; i<3;i++){
+			buttons[i] = new JCheckBox(f[i]);
+			buttons[i].addItemListener(this);
+			icon[i] = new ImageIcon(f[i]+".gif");
+			picLabel[i] = new JLabel(f[i]);
+		}
+		JPanel checkPanel = new JPanel(new GridLayout(0, 1));
+		for(int i = 0; i<3;i++){
+			checkPanel.add(buttons[i]);
+		}
+		add(checkPanel);
+		add(picLabel[0]);
+		add(picLabel[1]);
+		add(picLabel[2]);
+		
+	}
+	public static void main(String[] args) {
+		JFrame frame = new JFrame("Check Box");
+		JComponent newContentpane = new CheckBox();//다형성 jcomponent가 상위 클래스
+		newContentpane.setOpaque(true);//투명도 (투명하게 함)
+		frame.setContentPane(newContentpane);
+		frame.setSize(500,200);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
+	}
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		ImageIcon image = null;
+		Object source = e.getItemSelectable();
+		for(int i=0; i<3;i++){
+			if(source == buttons[i]){
+				if(e.getStateChange() == ItemEvent.DESELECTED)//선택해제
+					picLabel[i].setIcon(null);
+				else 
+					picLabel[i].setIcon(icon[i]);
+			}	
+		}
+		
+	}
+
+}
+
+
+
+
+
+
+
+# 체크박스-> 총액 나오기
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Select extends JFrame implements ItemListener {
+	JCheckBox [] c = new JCheckBox[4];
+	String[] item = {"목걸이", "반지", "귀걸이", "팔찌"};
+	int [] price = {20, 20, 10, 15};
+	JLabel label = new JLabel();
+	
+	int sum = 0;
+	
+	Select(){
+		setSize(500, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(new GridLayout(2, 1));
+		JPanel panel2 = new JPanel(new GridLayout(0, 4));
+		for(int i = 0; i<4; i++){
+			c[i] = new JCheckBox(item[i]);
+			c[i].addItemListener(this);
+			panel2.add(c[i]);
+		}
+		label = new JLabel("상품의 총액은 "+sum+"만원 입니다.");
+		label.setFont(new Font("굴림",Font.BOLD,15));
+		add(panel2);
+		add(label);
+		setVisible(true);
+		
+	}
+	public static void main(String[] args) {
+		Select s = new Select();
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		Object source = e.getItemSelectable();
+		for(int i=0; i<4;i++){
+			if(source == c[i]){
+				if(e.getStateChange() == ItemEvent.DESELECTED)//선택해제
+					sum =sum - price[i];
+				else 
+					sum += price[i];
+				label.setText("상품의 총액은 "+sum+"만원 입니다.");
+			}	
+		}
+		
+	}
+
+}

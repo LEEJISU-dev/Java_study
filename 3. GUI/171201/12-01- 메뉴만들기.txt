@@ -1,0 +1,211 @@
+#텍스트 입력->textarea에 저장됨
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class MyFrame extends JFrame implements ActionListener {
+	private JTextField tf;//한줄
+	private JTextArea ta;//여러줄
+	
+	MyFrame(){
+		setTitle("TextArea Test");
+		setSize(300, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		tf = new JTextField(30);
+		tf.addActionListener(this);
+		
+		ta = new JTextArea(10, 30);
+		ta.setEditable(false);
+		
+		add(tf, BorderLayout.NORTH);
+		add(ta, BorderLayout.CENTER);
+		
+		setVisible(true);
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String text = tf.getText();
+		ta.append(text + "\n");
+		tf.selectAll();//모든 문자 선택
+		ta.setCaretPosition(ta.getDocument().getLength());
+		//커서를 맨 마지막으로 가게 함
+
+	}
+}
+
+public class TextArea {
+
+	public static void main(String[] args) {
+		new MyFrame();
+
+	}
+
+}
+
+
+
+
+
+
+
+# 마우스 오른쪽클릭-> 메뉴나오게 하는 프로그램
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Popup extends JFrame implements ActionListener{
+	private JPopupMenu p;
+	private JMenuItem m1, m2;//가장 마지막에 나오는 메뉴
+	private JTextArea ta;
+	
+	Popup(){
+		setTitle("Popup Menu");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(300, 200);
+		//pack();//크기를 맞게 사이즈 조정해줌 
+		ta = new JTextArea(10, 20);
+		add(ta);
+		//팝업 메뉴 생성
+		p = new JPopupMenu();
+		m1 = new JMenuItem("탐색");
+		m1.addActionListener(this);
+		p.add(m1);
+		m2 = new JMenuItem("저장");
+		m2.addActionListener(this);
+		p.add(m2);
+		//팝업 메뉴 생성 위해서 텍스트 영역에 마우스 리스너 등록
+		ta.addMouseListener(new PopupListener());
+		
+		setVisible(true);
+	}
+	class PopupListener extends MouseAdapter{//하나만 상속받기 위함
+		public void mousePressed(MouseEvent e){
+			showPopup(e);
+		}
+		public void mouseReleased(MouseEvent e){
+			showPopup(e);
+		}
+		private void showPopup(MouseEvent e){
+			if(e.isPopupTrigger()){
+				p.show(e.getComponent(), e.getX(), e.getY());
+				//누른곳의 좌표를 찾아 팝업메뉴를 보여줌
+			}
+		}
+	
+	}
+	public static void main(String[] args) {
+		new Popup();
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() ==m1){
+			JOptionPane.showMessageDialog(this, "탐색이 선택되었습니다");
+		}else if(e.getSource() == m2){
+			JOptionPane.showMessageDialog(this, "저장이 선택되었습니다");
+		}
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+#메뉴바 메뉴 메뉴아이템
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class MenuTest extends JFrame implements ActionListener, ItemListener{
+	private JMenuBar mb;
+	private JMenu menu, smenu;
+	private JMenuItem mi1, mi2, smi1, smi2;
+	private JRadioButtonMenuItem rb1, rb2;
+	private JCheckBoxMenuItem cbm1, cbm2; 
+	
+	MenuTest(){
+		//메뉴바 생성
+		mb = new JMenuBar();
+		
+		//첫번째 메뉴를 생성
+		menu = new JMenu("1");
+		menu.setMnemonic(KeyEvent.VK_F);
+		mb.add(menu);
+		
+		//메뉴 항목 생성
+		mi1 = new JMenuItem("메뉴 항목 1", KeyEvent.VK_1);
+		
+		mi1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.ALT_MASK));//단축키 표시
+		mi1.addActionListener(this);
+		menu.add(mi1);
+		
+		ImageIcon icon = new ImageIcon("icon.png");
+		mi2 = new JMenuItem("메뉴 항목 2", icon);
+		menu.add(mi2);
+		
+		
+		//라디오 버튼 메뉴 항목들을 생성해서 메뉴에 추가
+		menu.addSeparator();//선그어서 분리
+		ButtonGroup group = new ButtonGroup();
+		rb1 = new JRadioButtonMenuItem("라디오 버튼 메뉴 항목 1");
+		rb1.setSelected(true);
+		group.add(rb1);
+		menu.add(rb1);
+		
+		rb2 = new JRadioButtonMenuItem("라디오 버튼 메뉴 항목 2");
+		group.add(rb2);
+		menu.add(rb2);
+		
+		//체크박스 메뉴 항목들 생성해서 메뉴에 추가
+		menu.addSeparator();
+		cbm1 = new JCheckBoxMenuItem("체크 박스 메뉴 항목 1");
+		menu.add(cbm1);
+		cbm2 = new JCheckBoxMenuItem("체크 박스 메뉴 항목 2");
+		menu.add(cbm2);
+		
+		//서브 메뉴 생성
+		menu.addSeparator();
+		smenu = new JMenu("서브메뉴");
+		smi1 = new JMenuItem("서브 메뉴 항목 1");
+		smenu.add(smi1);
+		smi2 = new JMenuItem("서브 메뉴 항목 2");
+		smenu.add(smi2);
+		
+		menu.add(smenu);
+		
+		setJMenuBar(mb);
+	}
+	public static void main(String[] args) {
+		MenuTest f =new MenuTest();
+		f.setTitle("Menu Test");
+		f.setSize(300, 200);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setVisible(true);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		
+	}
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		
+		
+	}
+
+}
+

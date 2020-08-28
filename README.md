@@ -91,6 +91,10 @@
 ### 171204
 	- thread
 	- rannable
+
+### 171207
+	- 컬렉션 Set (HashSet)
+	- 컬렉션 Map (Hashtable, LinkedHashMap, HashMap)
 -----------------------------------------------------
 
 ## 3. 자바의 GUI (Graphical User Interface)

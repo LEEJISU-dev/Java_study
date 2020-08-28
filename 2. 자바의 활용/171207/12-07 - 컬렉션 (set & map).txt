@@ -1,0 +1,661 @@
+#Set예제
+
+import java.util.*;
+
+class AB{}
+
+class CD{}
+public class SetTest {
+
+	public static void main(String[] args) {
+		AB a = new AB();
+		CD b = new CD();
+		
+		String c = new String("C");//래퍼클래스
+		
+		HashSet hs = new HashSet();
+		hs.add(a);
+		hs.add(b);
+		hs.add(c);
+		//hs.add(a);//값의 중복 허용 안해서 찍히지 않음
+		
+		Iterator it = hs.iterator();//하나씩 가져오기
+		while(it.hasNext()){//가져온것이 있다면
+			Object obj =it.next();
+			System.out.println(obj);
+		}
+	}
+
+}
+
+
+
+#set기본 기능들
+
+import java.util.*;
+public class HashSetTest {
+
+	public static void main(String[] args) {
+		HashSet<Integer> odd = new HashSet<Integer>();
+		HashSet<Integer> even = new HashSet<Integer>();
+		
+		for(int i=1; i<=5; i=i+2){
+			odd.add(i);
+			even.add(i+1);
+		}
+		boolean setChanged =odd.add(5);
+		System.out.println("성공여부: "+setChanged);
+		setChanged = even.add(12);
+		System.out.println("성공여부: "+setChanged);
+		System.out.println("odd집합: "+odd);
+		System.out.println("even집합: "+even);
+		System.out.println("odd min:"+Collections.min(odd));
+		System.out.println("odd max:"+Collections.max(even));
+		Iterator<Integer> it = even.iterator();
+		int sum =0;
+		
+		while(it.hasNext()){
+			sum +=it.next();
+		}
+		System.out.println("even sum:"+sum);
+	}
+
+}
+
+
+
+
+
+
+
+
+#set중복여부
+
+import java.util.*;
+public class Setex1 {
+
+	public static void main(String[] args) {
+		Object[] o = {"1",new Integer(1),"2","2", "3","4"};
+		HashSet s= new HashSet();
+		
+		for(int i=0; i<o.length;i++){
+			s.add(o[i]);
+		}
+		System.out.println(s);
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+#set 랜덤
+import java.util.*;
+public class Setex2 {
+
+	public static void main(String[] args) {
+		HashSet h = new HashSet();
+		for(int i=0; h.size()<6;i++){
+			int num =(int)(Math.random()*45)+1;
+			h.add(new Integer(num));
+		}
+		List list = new LinkedList(h);
+		Collections.sort(list);
+		System.out.println(list);
+	}
+
+}
+
+
+
+
+
+
+#set 랜덤 빙고판
+import java.util.*;
+public class Setex3 {
+
+	public static void main(String[] args) {
+		HashSet set = new HashSet();
+		int[][] board = new int [5][5];
+		
+		for(int i=0; set.size()<25;i++){
+			set.add((int)(Math.random()*50)+1+"");
+		}
+		Iterator it = set.iterator();
+		
+		for(int i=0; i<board.length;i++){
+			for(int j=0; j<board[i].length;j++){
+				board[i][j] = Integer.parseInt((String)it.next());
+				System.out.print((board[i][j]<10 ? "  ":" ")+board[i][j]);
+			}
+			System.out.println();
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#set 클래스 객체 중복1
+import java.util.*;
+public class Setex4 {
+
+	public static void main(String[] args) {
+		HashSet set = new HashSet();
+		set.add("abc");
+		set.add("abc");
+		set.add(new Person("Dabid", 10));
+		set.add(new Person("Dabid", 10));
+		
+		System.out.println(set);
+	}
+
+}
+class Person{
+	String name;
+	int age;
+	
+	Person(String name, int age){
+		this.name = name;
+		this.age = age;
+	}
+	public String toString(){
+		return name +":"+age;
+	}
+}
+
+
+
+
+
+
+
+
+
+#set 클래스 객체 2
+import java.util.*;
+public class Setex5 {
+
+	public static void main(String[] args) {
+		HashSet set =new HashSet();
+		
+		set.add(new String("abc"));
+		set.add(new String("abc"));
+		set.add(new Per("David", 10));
+		set.add(new Per("David", 10));
+		
+		System.out.println(set);
+	}
+
+}
+class Per{
+	String name;
+	int age;
+	
+	Per(String name, int age){
+		this.name= name;
+		this.age = age;
+	}
+	
+	public boolean equals(Object o){
+		if(o instanceof Per){
+			Per tmp =(Per)o;
+			return name.equals(tmp.name) && age==tmp.age;
+		}
+		return false;
+	}
+	
+	public int hashCode(){
+		return (name+age).hashCode();
+	}
+	public String toString(){
+		return name +":"+age;
+	}
+}
+
+
+
+
+
+
+
+
+#합, 교집합, 차집합
+
+import java.util.*;
+public class Setex6 {
+
+	public static void main(String[] args) {
+		HashSet seta = new HashSet();
+		HashSet setb = new HashSet();
+		HashSet setHab = new HashSet();
+		HashSet setKyo = new HashSet();
+		HashSet setCha = new HashSet();
+		
+		seta.add("1"); seta.add("2"); seta.add("3");
+		seta.add("4"); seta.add("5");
+		System.out.println("A ="+seta);
+		
+		setb.add("4"); setb.add("5"); setb.add("6");
+		setb.add("7"); setb.add("8"); 
+		System.out.println("B ="+setb);
+		
+		Iterator it = setb.iterator();
+		while(it.hasNext()){
+			Object tmp = it.next();
+			if(seta.contains(tmp))
+				setKyo.add(tmp);
+		}
+		it = seta.iterator();
+		while(it.hasNext()){
+			Object tmp =it.next();
+			if(!setb.contains(tmp))
+				setCha.add(tmp);
+		}
+		it =seta.iterator();
+		while(it.hasNext())
+			setHab.add(it.next());
+		
+		it = setb.iterator();
+		while(it.hasNext())
+			setHab.add(it.next());
+		
+		System.out.println("A ∩ B ="+setKyo);
+		System.out.println("A ∪ B ="+setHab);
+		System.out.println("A - B ="+setCha);
+	}
+
+}
+
+
+
+
+
+
+
+#map 
+import java.util.*;
+
+class EF{}
+class GH{}
+
+public class MapTest {
+
+	public static void main(String[] args) {
+		EF a = new EF();
+		GH b = new GH();
+		String c = new String("C");
+		
+		Hashtable h = new Hashtable();
+		h.put("EF", a);//키와 값이 한 세트
+		h.put("GH", b);
+		h.put("word", c);
+		h.put("dd", a);//키값만 다르면 중복 얼마든지 허용함
+		
+		Enumeration enu = h.elements();//하나씩 가져오기Iterator와 같은 기능(set에서만 씀)
+		while(enu.hasMoreElements()){
+			Object obj = enu.nextElement();
+			System.out.println(obj);
+		}
+		
+		System.out.println("키에 의한 값을 반환");
+		Object obj = h.get("dd");
+		System.out.println(obj);
+		
+		
+		
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#map 이용 성적 출력
+import java.util.*;
+public class HashMapTest {
+
+	public static void main(String[] args) {
+		LinkedHashMap<String, Integer> lm = new LinkedHashMap<String, Integer>();
+		lm.put("국어", 98);
+		lm.put("영어", 100);
+		lm.put("수학", 86);
+		lm.put("사회", 99);
+		lm.put("과학", 98);
+		
+		System.out.println("당신의 성적: "+lm+total_avg(lm));
+	}
+	public static String total_avg(LinkedHashMap m){
+		int total =0;
+		int count =m.size();
+		Collection<Integer> c = m.values();
+		Iterator<Integer> i = c.iterator();
+		while(i.hasNext()){
+			total+= i.next();
+		}
+		return "  총점="+total+" 평균 ="+(double)total/count;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#map 아이디 패스워드 일치 불일치
+import java.util.*;
+public class Mapex1 {
+
+	public static void main(String[] args) {
+		HashMap m = new HashMap<>();
+		m.put("myid", "1234");
+		m.put("asdf", "1111");
+		m.put("asdf", "1234");
+		
+		Scanner s = new Scanner(System.in);
+		while(true){
+			System.out.println("id와 password를 입력하세요");
+			System.out.print("id:");
+			String id =s.nextLine().trim();
+			System.out.println();
+			System.out.print("password:");
+			String password =s.nextLine().trim();
+			System.out.println();
+			
+			if(!m.containsKey(id)){
+				System.out.println("다시 입력하세요");
+				continue;
+			}else{
+				if(!(m.get(id)).equals(password)){
+					System.out.println("다시 입력하세요");
+				}else{
+					System.out.println("id과 비밀번호가 일치합니다");
+					break;
+				}
+			}
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+#참가자 총점 평균 최고 최저 점수 
+import java.util.*;
+import java.util.Set;
+public class Mapex2 {
+
+	public static void main(String[] args) {
+		HashMap m = new HashMap<>();
+		m.put("djava",new Integer(90));
+		m.put("djava", new Integer(100));
+		m.put("sjava", new Integer(100));
+		m.put("ajava", new Integer(80));
+		m.put("bjava", new Integer(90));
+		
+		Set set = m.entrySet();
+		Iterator it = set.iterator();
+		
+		while(it.hasNext()){
+			Map.Entry e = (Map.Entry)it.next();
+			System.out.println("name: "+e.getKey()+"  grade:"+e.getValue());
+		}
+		set = m.keySet();
+		System.out.println("참가자 명단: "+set);
+		
+		Collection values = m.values();
+		it = values.iterator();
+		
+		int total =0;
+		
+		while(it.hasNext()){
+			Integer i = (Integer)it.next();
+			total +=i.intValue();
+		}
+		System.out.println("총점:"+total);
+		System.out.println("평균:"+(float)total/set.size());
+		System.out.println("최고점수:"+Collections.max(values));
+		System.out.println("최저점수:"+Collections.min(values));
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+#전화번호 그룹별로 출력 (맵안에 맵넣기
+import java.util.*;
+public class Mapex3 {
+	static HashMap phoneBook = new HashMap<>();
+	public static void main(String[] args) {
+		addPhoneNo("친구", "이자바", "010-0000-0000");
+		addPhoneNo("친구", "김자바", "010-1111-0000");
+		addPhoneNo("친구", "김자바", "010-0000-2222");
+		addPhoneNo("회사", "김대리", "010-4444-0000");
+		addPhoneNo("회사", "김대리", "010-5555-0000");
+		addPhoneNo("회사", "박대리", "010-6666-0000");
+		addPhoneNo("회사", "이과장", "010-7777-0000");
+		addPhoneNo("세탁", "010-8888-0000");
+		
+		printList();
+		
+	}
+	static void addPhoneNo(String groupName, String name, String tel){
+		addGroup(groupName);
+		HashMap group = (HashMap)phoneBook.get(groupName);
+		group.put(tel, name);
+	}
+	static void addGroup(String groupName){
+		if(!phoneBook.containsKey(groupName))
+			phoneBook.put(groupName, new HashMap());
+	}
+	static void addPhoneNo(String name, String tel){
+		addPhoneNo("기타",name, tel);
+	}
+	static void printList(){
+		Set set = phoneBook.entrySet();
+		Iterator it = set.iterator();
+		
+		while(it.hasNext()){
+			Map.Entry e =(Map.Entry)it.next();
+			
+			Set subSet = ((HashMap)e.getValue()).entrySet();
+			Iterator subIt = subSet.iterator();
+			
+			System.out.println(" * "+e.getKey()+"["+subSet.size()+"]");
+			
+			while(subIt.hasNext()){
+				Map.Entry subE = (Map.Entry)subIt.next();
+				String telNo = (String)subE.getKey();
+				String name = (String)subE.getValue();
+				System.out.println(name+" "+telNo);
+				}
+			System.out.println();
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+#map 배열 중복값 수세서 #출력
+import java.util.*;
+public class Mapex4 {
+
+	public static void main(String[] args) {
+		String[] data= {"A","K","A","K","D","K","A","K","K","K","Z","D"};
+		
+		HashMap map = new HashMap();
+		
+		for(int i=0; i<data.length;i++){
+			if(map.containsKey(data[i])){
+				Integer value = (Integer)map.get(data[i]);
+				map.put(data[i], new Integer(value.intValue()+1));
+			}else {
+				map.put(data[i], new Integer(1));
+			}
+		}
+		Iterator it = map.entrySet().iterator();
+		
+		while(it.hasNext()){
+			Map.Entry entry =(Map.Entry)it.next();
+			int value =((Integer)entry.getValue()).intValue();
+			System.out.println(entry.getKey()+" : "+printBar('#',value)+" "+value);
+		}
+
+	}
+	
+	public static String printBar(char ch, int value){
+		char[] bar = new char[value];
+		
+		for(int i=0; i<bar.length;i++)
+			bar[i]= ch;
+		
+		return new String(bar);
+	}
+
+}
+
+
+
+
+
+
+
+
+#단어 저장 후 검색(영한 사전)
+import java.util.*;
+public class Mapex5 {
+
+	public static void main(String[] args) {
+		HashMap<String, String> dic = new HashMap<>();
+		
+		dic.put("baby", "아기");
+		dic.put("love", "사랑");
+		dic.put("apple", "사과");
+		
+		Set<String> keys = dic.keySet();//key문자열 가진 set 리턴
+		Iterator<String> it = keys.iterator();
+		
+		while(it.hasNext()){
+			String key = it.next();
+			String value = dic.get(key);
+			System.out.println("("+key+", "+value+")");
+		}
+		Scanner sc = new Scanner(System.in);
+		for(int i=0; i<3;i++){
+			System.out.print("찾고 싶은 단어 >>");
+			String eng = sc.nextLine();
+			System.out.println(dic.get(eng));
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

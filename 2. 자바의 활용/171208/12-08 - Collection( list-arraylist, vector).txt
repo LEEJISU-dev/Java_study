@@ -1,0 +1,335 @@
+#List 
+
+import java.util.*;
+public class ArrayListTest {
+
+	public static void main(String[] args) {
+		String[] name ={"kim","lee","park","jung","oh"};
+
+		//문자열의 배열을 이용하여 리스트 객체 생성
+		ArrayList<String> lname = new ArrayList<String>(Arrays.asList(name));
+		System.out.println("초기값 :"+lname);
+
+		lname.add("ha");//리스트 끝에 추가
+		System.out.println("\"ha\" 추가된 후의 값:"+lname);
+
+		lname.set(0, "김");//0번째 항목 변경
+		lname.add(3, "곽");//3번째에 추가
+		System.out.println("\"김\"으로 변경되고 \"곽\"이 추가된 값:"+lname);
+
+		Collections.shuffle(lname);//리스트 무작위 재배열
+		System.out.println("shuffle()메소드가 적용된 값: "+lname);
+
+		Collections.sort(lname);//리스트 정렬
+		System.out.println("sort()메소드가 적용된 값: "+lname);
+
+		System.out.println("5번째 요소의 값: "+lname.get(4));
+
+		Collections.fill(lname, "김");//리스트 모든 요소 "김"으로 설정
+		System.out.println("모든 요소를 \"김\"으로 설정된 값: "+lname);
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+#List -> sublist
+
+import java.util.*;
+public class Listex1 {
+
+	public static void main(String[] args) {
+		ArrayList list = new ArrayList<>(10);
+		list.add(new Integer(5));
+		list.add(new Integer(4));
+		list.add(new Integer(2));
+		list.add(new Integer(0));
+		list.add(new Integer(1));
+		list.add(new Integer(3));
+
+		//1~4의 인덱스를 가져와서 리스트 생성
+		ArrayList list2 = new ArrayList<>(list.subList(1, 4));
+		print(list, list2);
+		
+		//순서대로 정렬
+		Collections.sort(list);
+		Collections.sort(list2);
+		print(list, list2);
+		System.out.println("list1.containsAll(list2):"+list.containsAll(list2));
+		
+		list2.add("B");
+		list2.add("C");
+		list2.add(3,"A");//3번째에 A추가
+		print(list, list2);
+		
+		list2.set(3, "AA");//3번을 AA로 바꿈
+		print(list, list2);
+		
+		//list에서 list2와 겹치는 부분만 남기고 삭제
+		System.out.println("list1.retainAll(list2):"+list.retainAll(list2));
+		print(list, list2);
+		
+		//list2에서 list1에 포함된 객체 삭제
+		for(int i=list2.size()-1;i>=0;i--){
+			if(list.contains(list2.get(i)))
+				list2.remove(i);
+		}
+		print(list, list2);
+	}
+	static void print(ArrayList list, ArrayList list2){
+		System.out.println("list1 :"+list);
+		System.out.println("list2 : "+list2);
+		System.out.println();
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#제네릭 사용법
+
+import java.util.*;
+public class GenericsTest {
+
+	public static void main(String[] args) {
+		/*String s1 ="Hello";
+		String s2 = "100";
+		Integer i1 = 10;
+		
+		Vector<String> v= new Vector<String>();//<>generics표현
+		v.add(s1);//벡터는 addElement써야하지만 add써도 괜찮
+		v.addElement(s2);
+		//v.add(i1); 오류뜸
+		 
+		for(int i=0; i<v.size();i++){
+			System.out.println(v.get(i).toUpperCase());//제네릭했기 때문에 형변환 ㄴㄴ
+		}*/
+		ArrayList al = new ArrayList<>();
+		al.add("aaa");
+		al.add("bbb");
+		al.add("ccc");
+		
+/*		for(int i=0; i<al.size();i++){
+			String tmp = (String)al.get(i);//제네릭 하지 않으면 형변환 계속 해줘야 함
+			System.out.println(tmp);
+		}*/
+		for(Object ol :al){
+			System.out.println(ol);
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+import java.util.*;
+public class Listex2 {
+
+	public static void main(String[] args) {
+		final int LIMIT =10;
+		String source ="0123456789abcdefghijABCDEFGHIJ!@#$%^&*()ZZZ";
+		int length = source.length();
+		
+		List list = new ArrayList<>(length/LIMIT+10);
+		
+		for(int i=0; i<length; i+=LIMIT){
+			if(i+LIMIT <length)
+				list.add(source.substring(i, i+LIMIT));
+			else
+				list.add(source.substring(i));
+		}
+		for(int i=0; i<list.size();i++){
+			System.out.println(list.get(i));
+		}
+
+		
+		
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+#벡터의 용량과 사이즈 
+import java.util.*;
+public class Listex3 {
+
+	public static void main(String[] args) {
+		Vector v = new Vector<>(5);
+		v.add("1");
+		v.add("2");
+		v.add("3");
+		print(v);
+		
+		v.trimToSize();//빈공간을 없앤다(용량 크기 같아짐)
+		System.out.println("===After trimToSize()===");
+		print(v);
+		
+		v.ensureCapacity(6);//최소한의 용량이 6이 되게 만듦
+		System.out.println("===After ensureCapacity(6)===");
+		print(v);
+		
+		v.setSize(7);//사이즈 7로 늘림 ->용량은 부족해서 두배가 됨
+		System.out.println("===After setSize(7)===");
+		print(v);
+
+		v.clear();//v의 모든 요소 삭제
+		System.out.println("===After clear()===");
+		print(v);
+	}
+	
+	public static void print(Vector v){
+		System.out.println(v);
+		System.out.println("size: "+v.size());//사이즈
+		System.out.println("capacity: "+v.capacity());//용량
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+#
+import java.util.*;
+public class Listex4 {
+
+	public static void main(String[] args) {
+		Vector<Integer> v= new Vector<>();
+		v.add(5);
+		v.add(4);
+		v.addElement(-1);
+		v.add(2, 100);
+		System.out.println("백터 내의 요소 객체의 수:"+v.size());
+		System.out.println("백터의 현재 용량: "+v.capacity());//디폴트값음 10
+		
+		for(int i =0; i<v.size();i++){
+			int n = v.get(i);
+			System.out.println(n);
+		}
+		int sum=0;
+		for(int i=0; i<v.size();i++){
+			int n= v.elementAt(i);
+			sum +=n;
+		}
+		System.out.println("백터의 정수의 합: "+sum);
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#가장 긴 이름 찾기
+import java.util.*;
+public class Listex5 {
+
+	public static void main(String[] args) {
+		ArrayList<String> a = new ArrayList<>();
+		
+		Scanner sc = new Scanner(System.in);
+		for(int i=0; i<4;i++){
+			System.out.print("이름을 입력하세요>>");
+			String s = sc.nextLine();
+			a.add(s);
+		}
+		
+		for(int i=0; i<a.size();i++){
+			String name = a.get(i);
+			System.out.print(name+" ");
+		}
+		
+		int longIndex = 0;
+		for(int i=1; i<a.size();i++){
+			if(a.get(longIndex).length()<a.get(i).length())
+				longIndex =i;
+		}
+		System.out.println("\n가장 긴 이름은: "+a.get(longIndex));
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

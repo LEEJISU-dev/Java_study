@@ -95,6 +95,9 @@
 ### 171207
 	- 컬렉션 Set (HashSet)
 	- 컬렉션 Map (Hashtable, LinkedHashMap, HashMap)
+
+### 171208
+	- 컬렉션 List (ArrayList, Vector)
 -----------------------------------------------------
 
 ## 3. 자바의 GUI (Graphical User Interface)

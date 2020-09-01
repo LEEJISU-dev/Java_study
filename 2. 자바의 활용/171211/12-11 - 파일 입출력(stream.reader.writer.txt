@@ -1,0 +1,461 @@
+#파일입력스트림
+
+import java.io.*;
+public class FileInputStreamEx {
+
+	public static void main(String[] args) {
+		FileInputStream in = null;
+		try{
+			in = new FileInputStream("C:\\Windows\\system.ini");
+			int c;
+			while((c = in.read())!= -1){//파일의 끝은 -1(Eof)를 반환함
+				System.out.print((char)c);
+			}
+			in.close();//꼭 닫아주기
+		}catch(IOException e){
+			System.out.println("IO error");
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#파일 아우풋스트림
+import java.io.*;
+
+public class FileOutputStreamEx {
+
+	public static void main(String[] args) {
+		try{
+			FileOutputStream f = new FileOutputStream("C:\\test.out");
+			FileInputStream fin = null;
+			
+			for(int i=0; i<10;i++){
+				int n = 10-i;
+				f.write(n);
+			}
+			f.close();
+			
+			fin = new FileInputStream("c:\\test.out");
+			int c=0;
+			while((c=fin.read())!=-1){
+				System.out.print(c +" ");
+			}
+			
+		}catch(IOException e){
+			System.out.println("IO error");
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#파일 한글로 불러오기 ->"MS949"
+import java.io.*;
+public class FileReadHan {
+
+	public static void main(String[] args) {
+		InputStreamReader in =null;
+		FileInputStream fin = null;
+		try{
+			fin = new FileInputStream("C:\\tmp\\han.txt");
+			in = new InputStreamReader(fin,"MS949");
+			int c;
+			
+			System.out.println("인코딩 문자 집합은 "+in.getEncoding());
+			while((c=in.read())!= -1){
+				System.out.print((char)c);
+			}
+			in.close();
+			fin.close();
+		}catch(IOException e){
+			System.out.println("입출력 오류");
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#파일 리더(문자입출력)
+import java.io.*;
+public class FileReaderEx {
+
+	public static void main(String[] args) {
+		FileReader in = null;
+		try{
+			in = new FileReader("C:\\Windows\\system.ini");
+			int c;
+			while((c=in.read())!=-1){
+				System.out.print((char)c);
+			}
+			in.close();
+		}catch(IOException e){
+			System.out.println("입출력오류");
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#파일쓰기
+
+import java.io.*;
+public class FileWriterEx {
+
+	public static void main(String[] args) {
+		InputStreamReader in = new InputStreamReader(System.in);
+		
+		FileWriter fout = null;
+		int c;
+		try{
+			fout = new FileWriter("C:\\tmp\\test.txt");
+			while((c=in.read())!=-1){
+				fout.write(c);
+			}
+			in.close();
+			fout.close();
+		}catch(IOException e){
+			System.out.println("입출력 오류");
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#버퍼
+import java.io.*;
+public class BufferedIOEX {
+
+	public static void main(String[] args) {
+		InputStreamReader in = new InputStreamReader(System.in);
+		//버퍼의 용량(5)
+		BufferedOutputStream out = new BufferedOutputStream(System.out, 5);
+		
+		try{
+			int c;
+			while((c=in.read())!= -1){//ctrl-z입력할때까지 반복
+				out.write(c);
+			}
+			out.flush();//버퍼에 남아있는 문자 출력
+			if(in!=null){
+				in.close();
+				out.close();
+			}
+		}catch(IOException e){
+			System.out.println("IO error");
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import java.io.*;
+public class FileClassEx {
+	
+	public static void dir(File fd){
+		String[] filename = fd.list();
+		for(String s: filename){
+			File f = new File(fd, s);
+			long t = f.lastModified();
+			System.out.print(s);
+			System.out.print("\t파일 크기: "+f.length());
+			System.out.printf("\t수정한 시간: %tb %td %ta %tT\n", t, t, t, t);
+		}
+	}
+	public static void main(String[] args) {
+		File f1 = new File("C:\\windows\\system.ini");
+		File f2 = new File("C:\\tmp\\java_sample");
+		File f3 = new File("C:\\tmp");
+		
+		String res;
+		if(f1.isFile())
+			res = "파일";
+		else
+			res ="디렉터리";
+		System.out.println(f1.getPath()+"은 "+res+"입니다");
+		if(!f2.exists()){
+			if(!f2.mkdir())//존재하지 않으면 디렉터리 생성
+				System.out.println("디렉터리 생성 실패");
+		}
+		if(f2.isFile())
+			res = "파일";
+		else
+			res ="디렉터리";
+		System.out.println(f2.getPath()+"은 "+res+"입니다");
+		dir(f3);
+		
+		f2.renameTo(new File("C:\\tmp\\javasample"));
+		dir(f3);
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#파일 복사
+import java.io.*;
+public class TextCopy {
+
+	public static void main(String[] args) {
+		File src = new File("c:\\windows\\system.ini");
+		File dst = new File("c:\\tmp\\system.txt");
+		FileReader fr = null;
+		FileWriter fw = null;
+		BufferedReader in = null;
+		BufferedWriter out = null;
+		int c;
+		try{
+			fr=new FileReader(src);
+			fw= new FileWriter(dst);
+			in = new BufferedReader(fr);
+			out = new BufferedWriter(fw);
+			while((c=in.read())!=-1){
+				out.write((char)c);
+			}
+			in.close();
+			out.close();
+			fr.close();
+			fw.close();
+		}catch(IOException e){
+			System.out.println("파일 복사 오류");
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#바이너리 복사
+import java.io.*;
+public class BinaryCopy {
+
+	public static void main(String[] args) {
+		File src = new File("c:\\windows\\explorer.exe");
+		File dst = new File("c:\\tmp\\explorer.bin");
+		FileInputStream fi = null;
+		FileOutputStream fo = null;
+		BufferedInputStream in = null;
+		BufferedOutputStream out = null;
+		int c;
+		try{
+			fi= new FileInputStream(src);
+			fo = new FileOutputStream(dst);
+			in= new BufferedInputStream(fi);
+			out = new BufferedOutputStream(fo);
+			while((c=in.read())!=-1){
+				out.write((char)c);
+			}
+			in.close();
+			out.close();
+			fi.close();
+			fo.close();
+		}catch(IOException e){
+			System.out.println("파일 복사 오류");
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

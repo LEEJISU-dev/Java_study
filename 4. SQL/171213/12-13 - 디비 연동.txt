@@ -1,0 +1,253 @@
+#자바에 디비 연결하기
+
+1. 테이터베이스와 연결하는 프로그램 드라이버 찾기
+
+   -> Class.forName("com.mysql.jdbc.Driver");//드라이버 가져오기
+      Class.forName("org.gjt.mm.mysql.Driver");->얘두 mysql드라이버
+
+2. 연결 관리하는 connection 객체 생성
+
+   -> Connection con = null;
+   -> con = DriverManager.getConnection
+		("jdbc:mysql://localhost(==127.0.0.1):3306/디비이름","권한(root)","비번(1234)");//연결
+
+3. sql문장 실행
+	-> Statement stmt = null;
+
+	->String sql = "select * from sample";
+	-> stmt = con.createStatement();
+
+4. 검색을 했다면 ResultSet 에 저장
+	->ResultSet rs = null;
+
+	->rs = stmt.executeQuery(sql);//보기(select)할때만 사용
+		(executeupdate -> select 외의 모든것 사용할때)  
+5. 접속 종료
+
+	-> rs.close();
+	-> stmt.close();
+	-> con.close();
+
+
+
+
+import java.sql.*;
+
+public class Ex2 {
+
+	public static void main(String[] args) {
+		Connection con = null;//연결(접속)
+		Statement stmt = null;//sql
+		ResultSet rs = null;//결과 실행
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java","root","1234");
+			String sql = "select * from sample";
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(sql);
+			while(rs.next()){
+				System.out.println(rs.getInt(1)+" : "+rs.getString(2));
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+			
+		}catch(Exception e){
+			System.exit(0);
+		}
+
+		
+	}
+
+}
+
+
+
+
+
+
+
+
+
+#1	aaa	801010-1000000	Fri Oct 10 00:00:00 KST 1980	
+2	bbb	981010-1000000	Sat Oct 10 00:00:00 KST 1998	
+3	ccc	941010-1000000	Mon Oct 10 00:00:00 KST 1994
+
+
+import java.sql.*;
+public class MemberEx {
+
+	public static void main(String[] args) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs= null;
+		
+		String id ="root";
+		String pass ="1234";
+		String url ="jdbc:mysql://localhost:3306/java";
+		String sql ="select * from person";
+		
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+		}catch(Exception e){
+			System.exit(0);
+		}
+		
+		try{
+			con = DriverManager.getConnection(url, id, pass);
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			while(rs.next()){
+				int num = rs.getInt("num");//==rs.getInt(1);
+				String name = rs.getString("name");
+				String jumin = rs.getString("jumin");
+				java.sql.Date date = rs.getDate("birth");
+				java.util.Date d= new java.util.Date(date.getTime());
+				
+				System.out.println(num +"\t"+name +"\t"+jumin +"\t"+ d.toString() +"\t");
+			}
+			rs.close();
+			st.close();
+			con.close();
+		}catch(Exception e){
+			
+		}
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#친구 추가  / 검색/ 전체 출력 / 종료
+
+import java.sql.*;
+import java.util.*;
+public class Ex3 {
+
+	public static void main(String[] args) {
+		Connection con = null;
+		Statement st = null;//정적인 sql
+		ResultSet rs= null;
+		PreparedStatement pst = null;//동적인 sql
+		
+		String id ="root";
+		String pass ="1234";
+		String url ="jdbc:mysql://localhost:3306/java";
+		String sql;
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+		}catch(Exception e){
+			System.exit(0);
+		}
+		
+		try{
+			con = DriverManager.getConnection(url, id, pass);
+			
+		}catch(Exception e){
+			System.exit(0);
+		}
+		
+		Scanner sc = new Scanner(System.in);
+		while(true){
+			System.out.println("1.친구 추가\t 2. 주민번호로 검색\t 3.전체출력\t 4.수정  5.종료");
+			int select =sc.nextInt();
+			switch(select){
+			case 1:
+				System.out.println("[친구 추가]");
+				System.out.println();
+				System.out.print("이름 >>");
+				String name = sc.next();
+				System.out.print("주민 번호 >>");
+				String jumin = sc.next();
+				sql = "insert into friend values(null,?,?)";
+				
+				try{
+					pst = con.prepareStatement(sql);
+					pst.setString(1, name);//첫번째 ?값
+					pst.setString(2, jumin);
+					pst.executeUpdate();
+					pst.close();
+					System.out.println("등록 완료 되었습니다");
+				}catch(SQLException e){
+					System.exit(0);
+				}
+				break;
+			case 2:
+				System.out.println("[검색하기]");
+				System.out.print("주민번호를 입력하세요>>");
+				jumin =sc.next();
+				sql = "select * from friend where jumin='"+jumin+"'";
+				try{
+					st = con.createStatement();
+
+					rs = st.executeQuery(sql);
+					
+					while(rs.next()){
+						int num = rs.getInt(1);
+						name =rs.getString(2);
+						System.out.println(num + "\t"+name+"\t"+jumin);
+						System.out.println();
+					}
+					st.close();
+					rs.close();
+					System.out.println("검색 완료");
+				}catch(SQLException e){
+					System.exit(0);
+				}
+				break;
+			case 3:
+				System.out.println("[전체 출력]");
+				sql ="select * from friend";
+				try{
+					st = con.createStatement();
+					rs= st.executeQuery(sql);
+					while(rs.next()){
+						int num =rs.getInt(1);
+						name = rs.getString(2);
+						jumin = rs.getString(3);
+						System.out.println(num + "\t"+name+"\t"+jumin);
+						System.out.println();
+					}
+					st.close();
+					rs.close();
+				}catch(SQLException e){
+					System.exit(0);
+				}
+				break;
+			case 4:
+				System.out.println("[친구 수정]");
+				
+			case 5:
+				System.out.println("프로그램 종료");
+				try {
+					con.close();//무조건 예외 처리해야함
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				System.exit(0);
+			}
+		}
+	}
+
+}

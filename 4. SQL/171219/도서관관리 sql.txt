@@ -1,0 +1,47 @@
+/*도서 관리 시스템*/
+USE java;
+CREATE TABLE admin(
+id VARCHAR(20),
+pass VARCHAR(20)
+);
+
+DESC admin;
+
+INSERT INTO admin VALUES('admin','1234');
+
+CREATE TABLE lib(
+lib_name VARCHAR(20),
+lib_code VARCHAR(10),
+lib_price VARCHAR(10),
+lib_author VARCHAR(10),
+lib_publish VARCHAR(10),
+lib_state VARCHAR(10)
+);
+
+DESC lib;
+
+DROP TABLE member;
+CREATE TABLE member(
+mb_name VARCHAR(20),
+mb_num VARCHAR(20),
+mb_phone VARCHAR(20),
+mb_address VARCHAR(20)
+
+);
+
+DESC member;
+
+
+CREATE TABLE rent(
+rent_no VARCHAR(20),
+mb_name VARCHAR(20),
+mb_phone VARCHAR(20),
+mb_address VARCHAR(20),
+lib_name VARCHAR(20),
+lib_code VARCHAR(10),
+rent_date VARCHAR(20)
+);
+
+DESC rent;
+
+SELECT * FROM member;

@@ -1,0 +1,97 @@
+[ jsp 태그 ]
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!--     지시자       :page, include, taglib-->
+<%-- 
+<!-- jsp(HTML안에 java 코드 포함)와 servlet(JAVAdksdp html 태그포함) -->
+
+<%
+		//java code
+%>
+
+<%! %>	<!-- 선언부 / static 영역 -->
+
+<%= %>	<!-- System.out.println(); --> --%>
+
+
+----------------------------------------------------------------------------------------
+
+[Servlet ]
+
+(Hello.java)
+
+package lee.sample;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+/*
+ * Servlet을 생성하는 방법
+ * 
+ * step1. 임의의 클래스를 구현한 후 HttpServlet을 상속받는다.
+ * 
+ * step2. doGet()와 doPost()를 반드시 오버라이딩(재정의)한다.
+ * 			- web을 통해 테이터를 전송하는 방식 : get방식(엽서- 내용보임 /정보 한정 ) 과 post방식(편지지 - 내용안보임 / )
+ * 			- web : network = Net(mesh) Working 
+ * 					server(제공자)와 client(요청자 )
+ * 					internet > web, http, telnet, smtp/pop3, ,ftp, IRC...
+ * 
+ * step3. 매핑(web.xml)에 해당 서블릿 클래스를 등록하는 작업
+ * 
+ * 
+ * */
+
+public class Hello extends HttpServlet {
+	   
+	   public void doGet(HttpServletRequest request, HttpServletResponse response) 
+	         throws ServletException, IOException{
+	      doPost(request, response);
+	   }
+	   
+	   public void doPost(HttpServletRequest request, HttpServletResponse response) 
+	         throws ServletException, IOException{
+	      //step1. 한글처리
+	      request.setCharacterEncoding("utf-8");
+	      response.setContentType("text/html; charset=utf-8");
+	      
+	      //step2. 요청조회
+	      
+	      //step3. 비지니스 로직
+	      
+	      //step4. 응답처리 
+	      PrintWriter out = response.getWriter();
+	      out.print("<HTML>");
+	      out.print("<HEAD>");
+	      out.print("<TITLE>처음 만드는 servlet</TITLE>");
+	      out.print("</HEAD>");
+	      out.print("<BODY>");
+	      out.print("안녕, servlet");
+	      out.print("</BODY>");
+	      out.print("</HTML>");
+	   }
+
+	}
+
+
+----------------------------------------------------------------------------------------------
+
+
+
+======================================================
+
+
+[struts2 프레임 워크]
+
+1. web.xml
+
+2. struts.xml -> controller의 역할
+		(흐름을 제어한다)
+
+3. 
